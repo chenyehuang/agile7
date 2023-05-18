@@ -75,6 +75,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.MyHolder>{
     class MyHolder extends RecyclerView.ViewHolder{
         //账单名
         private TextView billName;
+//        年份
         private TextView year;
         private TextView month;
         private TextView day;
