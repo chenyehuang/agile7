@@ -24,7 +24,6 @@ import java.util.Objects;
 
 import cn.edu.jnu.agile7.R;
 import cn.edu.jnu.agile7.databinding.FragmentDashboardBinding;
-
 public class BillFragment extends Fragment {
     private FragmentDashboardBinding binding;
 
