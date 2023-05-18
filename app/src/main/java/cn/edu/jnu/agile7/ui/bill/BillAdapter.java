@@ -27,7 +27,6 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.MyHolder>{
         this.billArrayList=billArrayList;//从主页传过来的
         this.context = context;//因为和主页分离了，所以需要获取主页上下文
     }
-
     //获取列表
     public ArrayList<Bill> getList(){
         return this.billArrayList;
@@ -71,13 +70,14 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.MyHolder>{
 //        有可能删除中间的item会出现错乱，所以下面changed一次
         notifyDataSetChanged();
     }
-
     class MyHolder extends RecyclerView.ViewHolder{
         //账单名
         private TextView billName;
 //        年份
         private TextView year;
+//        月
         private TextView month;
+//        天
         private TextView day;
         //账单金额
         private TextView amount;
