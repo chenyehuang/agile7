@@ -15,20 +15,16 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 
-import java.util.AbstractList;
-import java.util.ArrayList;
+;
 import java.util.Objects;
 
 import cn.edu.jnu.agile7.databinding.ActivityMainBinding;
-import cn.edu.jnu.agile7.ui.bill.Bill;
-import cn.edu.jnu.agile7.ui.bill.DataServer;
+
 
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    private ArrayList<Bill>billArrayList=new ArrayList<Bill>();
-    private DataServer dataServer=new DataServer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

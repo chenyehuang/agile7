@@ -20,7 +20,7 @@ import java.util.Calendar;
 import cn.edu.jnu.agile7.R;
 import cn.edu.jnu.agile7.databinding.FragmentHomeBinding;
 import cn.edu.jnu.agile7.ui.SharedViewModel;
-import cn.edu.jnu.agile7.ui.bill.Bill;
+import cn.edu.jnu.agile7.ui.dashboard.Account;
 
 
 public class HomeFragment extends Fragment {
@@ -38,7 +38,6 @@ public class HomeFragment extends Fragment {
     RecyclerView statisticsRecycleview;
     private Homeadapter homeadapter;
     private ArrayList<Statistics>statisticsArrayList = new ArrayList<>();
-//    private ArrayList<Bill>billArrayList=new ArrayList<>();
 
     //    开始时间
     int selectedStartYear;
@@ -166,12 +165,12 @@ public class HomeFragment extends Fragment {
     }
 
     //    查询，将找到的对应日期的账单添加到statisticsArrayList中
-    public void query(ArrayList<Bill>billArrayList){
+    public void query(ArrayList<Account>billArrayList){
         double income=0;
         double expanditure=0;
         double sum=0;
         Statistics statistics;
-        Bill bill;
+        Account bill;
         if(billArrayList!=null&&billArrayList.size()!=0){
 //            只查询年份 如 2023.0-2024.0
             if(selectedStartMonth==0&&selectedEndMonth==0)
@@ -183,11 +182,11 @@ public class HomeFragment extends Fragment {
                     {
                         bill=billArrayList.get(j);
                         if(bill.getYear()==k){
-                            if(bill.getPrice()>=0){
-                                income+=bill.getPrice();
+                            if(bill.getMoney()>=0){
+                                income+=bill.getMoney();
                             }
                             else{
-                                expanditure+=bill.getPrice();
+                                expanditure+=bill.getMoney();
                             }
                         }
                     }
@@ -206,12 +205,12 @@ public class HomeFragment extends Fragment {
                         for(int j=0;j<billArrayList.size();j++){
                             bill=billArrayList.get(j);
                             if(bill.getYear()==selectedStartYear&&bill.getMonth()==i){
-                                Log.i("price",String.valueOf(bill.getPrice()));
-                                if(bill.getPrice()>=0){
-                                    income=income+bill.getPrice();
+                                Log.i("price",String.valueOf(bill.getMoney()));
+                                if(bill.getMoney()>=0){
+                                    income=income+bill.getMoney();
                                 }
                                 else{
-                                    expanditure=expanditure+bill.getPrice();
+                                    expanditure=expanditure+bill.getMoney();
                                 }
                             }
                         }
@@ -231,11 +230,11 @@ public class HomeFragment extends Fragment {
                             for(int j=0;j<billArrayList.size();j++){
                                 bill=billArrayList.get(j);
                                 if(bill.getYear()==k&&bill.getMonth()==i){
-                                    if(bill.getPrice()>=0){
-                                        income+=bill.getPrice();
+                                    if(bill.getMoney()>=0){
+                                        income+=bill.getMoney();
                                     }
                                     else{
-                                        expanditure+=bill.getPrice();
+                                        expanditure+=bill.getMoney();
                                     }
                                 }
                             }
@@ -250,11 +249,11 @@ public class HomeFragment extends Fragment {
                         for(int j=0;j<billArrayList.size();j++){
                             bill=billArrayList.get(j);
                             if(bill.getYear()==selectedEndYear&&bill.getMonth()==i){
-                                if(bill.getPrice()>=0){
-                                    income+=bill.getPrice();
+                                if(bill.getMoney()>=0){
+                                    income+=bill.getMoney();
                                 }
                                 else{
-                                    expanditure+=bill.getPrice();
+                                    expanditure+=bill.getMoney();
                                 }
                             }
                         }

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import cn.edu.jnu.agile7.R;
+import cn.edu.jnu.agile7.ui.dashboard.Account;
 
 /**
  * @author Administrator
@@ -21,19 +22,19 @@ import cn.edu.jnu.agile7.R;
 public class BillAdapter extends RecyclerView.Adapter<BillAdapter.MyHolder>{
     //设置context，让其他界面调用
     private Context context;
-    private ArrayList<Bill> billArrayList;
+    private ArrayList<Account> billArrayList;
     private ImageButton imageButton;
 
-    public BillAdapter(ArrayList<Bill> billArrayList, Context context) {//待会在activity的oncreate中需要用到
+    public BillAdapter(ArrayList<Account> billArrayList, Context context) {//待会在activity的oncreate中需要用到
         this.billArrayList=billArrayList;//从主页传过来的
         this.context = context;//因为和主页分离了，所以需要获取主页上下文
     }
 
     //获取列表
-    public ArrayList<Bill> getList(){
+    public ArrayList<Account> getList(){
         return this.billArrayList;
     }
-    public void setList(ArrayList<Bill>billArrayList){this.billArrayList=billArrayList;}
+    public void setList(ArrayList<Account>billArrayList){this.billArrayList=billArrayList;}
 
     @NonNull
     @Override
@@ -46,11 +47,11 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.MyHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull BillAdapter.MyHolder holder, @SuppressLint("RecyclerView") int position) {
-        holder.gettextviewBillName().setText(billArrayList.get(position).getBillName());
-        holder.gettextviewYear().setText(billArrayList.get(position).getYear().toString());
-        holder.gettextviewMonth().setText(billArrayList.get(position).getMonth().toString());
-        holder.gettextviewDay().setText(billArrayList.get(position).getDay().toString());
-        holder.gettextviewAmount().setText((billArrayList.get(position).getPrice().toString()));
+        holder.gettextviewBillName().setText(billArrayList.get(position).getTitle());
+        holder.gettextviewYear().setText(String.valueOf(billArrayList.get(position).getYear()));
+        holder.gettextviewMonth().setText(String.valueOf(billArrayList.get(position).getMonth()));
+        holder.gettextviewDay().setText(String.valueOf(billArrayList.get(position).getDay()));
+        holder.gettextviewAmount().setText(String.valueOf(billArrayList.get(position).getMoney()));
 //        删除数据
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -12,15 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import cn.edu.jnu.agile7.R;
-import cn.edu.jnu.agile7.ui.bill.Bill;
+
 
 /**
  * @author Administrator
  */
 public class Homeadapter extends RecyclerView.Adapter<Homeadapter.MyHolder> {
-
-    private ArrayList<Bill>billArrayList=new ArrayList<>();
-
     private Context context;
     private ArrayList<Statistics> statisticsArrayList;
 

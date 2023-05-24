@@ -1,16 +1,20 @@
 package cn.edu.jnu.agile7.ui.dashboard;
+
+import java.util.UUID;
+
 public class Account {
     private String Type;         //收入or支出
     private String category;     //哪种账目
-    private int money;           //金额
+    private double money;           //金额
     private String account;      //账户
     private int year;
     private int month;
     private int day;
     private String title;
     private String remake;
+    private UUID id;            //用于搜集界面那里点击删除后返回主界面，然后主界面也要删除(需要用这个id遍历检索才能找到)
 
-    public Account(String type, String category, int money, String account, int year, int month, int day, String title, String remake) {
+    public Account(String type, String category, double money, String account, int year, int month, int day, String title, String remake) {
         Type = type;
         this.category = category;
         this.money = money;
@@ -20,6 +24,8 @@ public class Account {
         this.day = day;
         this.title = title;
         this.remake = remake;
+        //极小概率会重复
+        this.id= UUID.randomUUID();
     }
 
     public void setType(String type) {
@@ -30,7 +36,7 @@ public class Account {
         this.category = category;
     }
 
-    public void setMoney(int money) {
+    public void setMoney(double money) {
         this.money = money;
     }
 
@@ -68,7 +74,7 @@ public class Account {
         return category;
     }
 
-    public int getMoney() {
+    public double getMoney() {
         return money;
     }
 
@@ -94,5 +100,9 @@ public class Account {
 
     public String getRemake() {
         return remake;
+    }
+
+    public UUID getId(){
+        return id;
     }
 }

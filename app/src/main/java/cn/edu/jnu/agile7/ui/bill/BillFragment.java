@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import cn.edu.jnu.agile7.R;
 import cn.edu.jnu.agile7.databinding.FragmentDashboardBinding;
 import cn.edu.jnu.agile7.ui.SharedViewModel;
+import cn.edu.jnu.agile7.ui.dashboard.Account;
 
 public class BillFragment extends Fragment {
     private FragmentDashboardBinding binding;
@@ -31,11 +32,14 @@ public class BillFragment extends Fragment {
     private RecyclerView recycleViewbill;
 //    主要用的adapter
     private BillAdapter billadapter;
-    private ArrayList<Bill> billList = new ArrayList<>();
+
+//账目记录界面的列表
+    private ArrayList<Account> accountArrayList = new ArrayList<>();
 
 //    存储搜索数据的列表
-    private ArrayList<Bill>filterbills;
+    private ArrayList<Account>filterbills;
     private SearchView searchView;
+
 //    用于搜索功能的适配器,会同步搜索内容更新列表
     private BillSearchAdapter billSearchAdapter;
     private DataServer dataServer=new DataServer();
@@ -43,20 +47,23 @@ public class BillFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        billList=dataServer.Load(BillFragment.this.getContext());
-        Log.i("billList",String.valueOf(billList.size())+"onCreate");//还是为0，data.dat为空？？？？？》
-        Bill bill=new Bill("美团外卖","食物","测试一下",2022,5,18,"小明", -1000.0);
-        Bill bill2=new Bill("美团外卖2","食物","测试一下",2023,5,18,"小明", -100.0);
-        Bill bill3=new Bill("美团外卖3","食物","测试一下",2023,5,18,"小明", -10.0);
-        if(billList.size()==0) {//先把我之前的三条数据放进去
-            billList.add(0,bill);
-            billList.add(1,bill2);
-            billList.add(2,bill3);
+        accountArrayList=dataServer.Load(BillFragment.this.getContext());
+        Log.i("billList",String.valueOf(accountArrayList.size())+"onCreate");//还是为0，data.dat为空？？？？？》
+
+        Account account=new Account("支出","餐饮",-1000.0,"支付宝",2021,5,20,"美团外卖","好吃");
+        Account account2=new Account("支出","餐饮",-100.0,"支付宝",2022,5,20,"美团外卖2","好吃");
+        Account account3=new Account("支出","餐饮",-10.0,"支付宝",2023,5,20,"美团外卖3","好吃");
+
+
+        if(accountArrayList.size()==0) {
+            accountArrayList.add(0,account);
+            accountArrayList.add(1,account2);
+            accountArrayList.add(2,account3);
         }
 ////        initListdata();
-        Log.i("billList",String.valueOf(billList.size())+"onCreate2");
+        Log.i("billList",String.valueOf(accountArrayList.size())+"onCreate2");
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-        sharedViewModel.setBillList(billList);
+        sharedViewModel.setBillList(accountArrayList);
 
         View rootView = inflater.inflate(R.layout.fragment_bill, container, false);
 
@@ -65,11 +72,11 @@ public class BillFragment extends Fragment {
         recycleViewbill=rootView.findViewById(R.id.recycle_view_account);
         //下面一行如果用模板自带的 View root = binding.getRoot()初始化会报空指针错误，所以注释掉了
         recycleViewbill.setLayoutManager(new LinearLayoutManager(BillFragment.this.getContext(),LinearLayoutManager.VERTICAL,false));//true和false有区别,第三个参数表示是否反转,
-        billadapter = new BillAdapter(billList,this.getActivity());
+        billadapter = new BillAdapter(accountArrayList,this.getActivity());
         recycleViewbill.setAdapter(billadapter);
         billadapter.notifyDataSetChanged();
 
-        Log.i("billList",String.valueOf(billList.size())+"onCreate3");
+        Log.i("billList", accountArrayList.size() +"onCreate3");
         return rootView;
     }
 
@@ -102,7 +109,7 @@ public class BillFragment extends Fragment {
             @Override
             //每次修改的文本在newtext
             public boolean onQueryTextChange(String newText) {
-                filterbills=filter(billList,newText);
+                filterbills=filter(accountArrayList,newText);
 //                在搜索的时候也会操作billadapter的数据，所以传入billadapter
                 billSearchAdapter=new BillSearchAdapter(filterbills,BillFragment.this.getContext(),billadapter);
                 //更换成 搜索适配器
@@ -115,20 +122,27 @@ public class BillFragment extends Fragment {
     }
 
     //搜索的过滤器
-    private ArrayList<Bill>filter(ArrayList<Bill>strings,String text){
+    private ArrayList<Account>filter(ArrayList<Account>strings,String text){
         filterbills = new ArrayList<>();
-        for (Bill bill: billadapter.getList()){
-            if (bill.getBillName().contains(text)) {
+        for (Account bill: billadapter.getList()){
+            if (bill.getTitle().contains(text)) {
                 filterbills.add(bill);
             }
-            else if (bill.getPrice().equals(Double.valueOf(text))) {
-                filterbills.add(bill);
-            }
-            else if (bill.getBillNote().contains(text)) {
+            else if (bill.getRemake().contains(text)) {
                 filterbills.add(bill);
             }
 //            账户account
             else if (bill.getAccount().contains(text)) {
+                filterbills.add(bill);
+            }
+            else if (bill.getCategory().contains(text)) {
+                filterbills.add(bill);
+            }
+            else if (bill.getType().contains(text)) {
+                filterbills.add(bill);
+            }
+//            TODO:下面是搜索数字，但是还没对非数字进行处理，所以输入非数字搜索会报错
+            else if (bill.getMoney()==(Double.parseDouble(text))) {
                 filterbills.add(bill);
             }
             else if (bill.getYear()==Integer.parseInt(text)){
@@ -146,10 +160,10 @@ public class BillFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        Log.i("billList",String.valueOf(billList.size())+"onDestroy");
-        billList= billadapter.getList();
-        Log.i("billList",String.valueOf(billList.size())+"onDestroy2");
-        dataServer.Save(BillFragment.this.getContext(),billList);
+        Log.i("billList",String.valueOf(accountArrayList.size())+"onDestroy");
+        accountArrayList= billadapter.getList();
+        Log.i("billList",String.valueOf(accountArrayList.size())+"onDestroy2");
+        dataServer.Save(BillFragment.this.getContext(),accountArrayList);
         super.onDestroyView();
         binding = null;
     }

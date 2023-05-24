@@ -6,17 +6,18 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
 
-import cn.edu.jnu.agile7.ui.bill.Bill;
+
+import cn.edu.jnu.agile7.ui.dashboard.Account;
 
 public class SharedViewModel extends ViewModel {
-    private MutableLiveData<ArrayList<Bill>> billList = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<Account>> Accountlist = new MutableLiveData<>();
 
-    public void setBillList(ArrayList<Bill> list) {
-        billList.setValue(list);
+    public void setBillList(ArrayList<Account> list) {
+        Accountlist.setValue(list);
     }
 
-    public LiveData<ArrayList<Bill>> getBillList() {
-        return billList;
+    public LiveData<ArrayList<Account>> getBillList() {
+        return Accountlist;
     }
 }
 

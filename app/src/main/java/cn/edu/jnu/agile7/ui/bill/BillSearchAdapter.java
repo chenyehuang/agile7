@@ -15,12 +15,13 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import cn.edu.jnu.agile7.R;
+import cn.edu.jnu.agile7.ui.dashboard.Account;
 
 /**
  * @author Administrator
  */
 public class BillSearchAdapter extends RecyclerView.Adapter<BillSearchAdapter.MyHolder> {
-    private ArrayList<Bill> billArrayList;
+    private ArrayList<Account> billArrayList;
     private Context context;
     private ImageButton imageButton;
     private BillAdapter billAdapter;
@@ -28,7 +29,7 @@ public class BillSearchAdapter extends RecyclerView.Adapter<BillSearchAdapter.My
     BillSearchAdapter(){
         ;
     }
-    BillSearchAdapter(ArrayList<Bill>billArrayList, Context context,BillAdapter billAdapter){//待会在activity的oncreate中需要用到
+    BillSearchAdapter(ArrayList<Account>billArrayList, Context context, BillAdapter billAdapter){//待会在activity的oncreate中需要用到
         //从主页传过来的list
         this.billArrayList=billArrayList;
         //因为和主页分离了，所以需要获取主页上下文
@@ -46,12 +47,11 @@ public class BillSearchAdapter extends RecyclerView.Adapter<BillSearchAdapter.My
 
     @Override
     public void onBindViewHolder(@NonNull BillSearchAdapter.MyHolder holder, @SuppressLint("RecyclerView") int position) {
-        holder.gettextviewBillName().setText(billArrayList.get(position).getBillName());
-        //将数字变成字符串
-        holder.gettextviewYear().setText(billArrayList.get(position).getYear().toString());
-        holder.gettextviewMonth().setText(billArrayList.get(position).getMonth().toString());
-        holder.gettextviewDay().setText(billArrayList.get(position).getDay().toString());
-        holder.gettextviewAmount().setText((billArrayList.get(position).getPrice().toString()));
+        holder.gettextviewBillName().setText(billArrayList.get(position).getTitle());
+        holder.gettextviewYear().setText(String.valueOf(billArrayList.get(position).getYear()));
+        holder.gettextviewMonth().setText(String.valueOf(billArrayList.get(position).getMonth()));
+        holder.gettextviewDay().setText(String.valueOf(billArrayList.get(position).getDay()));
+        holder.gettextviewAmount().setText(String.valueOf(billArrayList.get(position).getMoney()));
         //        搜索时候也可以点击按钮删除数据
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,7 +107,7 @@ public class BillSearchAdapter extends RecyclerView.Adapter<BillSearchAdapter.My
     }
 
     //为了搜索功能:给适配器设置过滤器
-    public void setFilter(ArrayList<Bill> filterBills){
+    public void setFilter(ArrayList<Account> filterBills){
         //动态数组只要创建了就不会为null了，神奇，必须用这个方法
         if(filterBills.isEmpty()){
             //相当于没改变
