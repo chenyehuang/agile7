@@ -30,7 +30,7 @@ public class ExpenditureFragment extends Fragment {
     private ImageView imageView_shopping;
     private ImageView imageView_bus;
     private ImageView imageView_else;
-    private String category;
+    private String category;//类别
     private EditText amount_money;
     private int money_number=0;
     private String select_account;
@@ -174,10 +174,10 @@ public class ExpenditureFragment extends Fragment {
 
         String[] options = {"账户1", "账户2", "账户3"};
         ArrayList<String> account_List = new ArrayList<>(Arrays.asList(options));
-//        //增加
-//         account_List.add("新的账户");
-//        //删除
-//        account_List.remove("新的账户");
+        //增加
+        //account_List.add("新的账户");
+        //删除
+        //account_List.remove("新的账户");
 
         ArrayAdapter adapter = new ArrayAdapter<>(this.getActivity(), R.layout.spinner_item, account_List);
 
@@ -241,7 +241,7 @@ public class ExpenditureFragment extends Fragment {
         selectedDay = npDay.getValue();
 
         // 将日期转换为字符串
-//        String selectedDate = String.format("%d-%02d-%02d", selectedYear, selectedMonth, selectedDay);
+        //String selectedDate = String.format("%d-%02d-%02d", selectedYear, selectedMonth, selectedDay);
 
 
         Title = (EditText) rootView.findViewById(R.id.expend_title);

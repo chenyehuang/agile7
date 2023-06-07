@@ -48,22 +48,22 @@ public class Homeadapter extends RecyclerView.Adapter<Homeadapter.MyHolder> {
         holder.getnetincome().setText(String.valueOf(statisticsArrayList.get(position).getNetincome()));
         if(statisticsArrayList.get(position).getMonth()!=0)
         {
-            String year= String.valueOf(String.valueOf(statisticsArrayList.get(position).getYear()));
-            String month= String.valueOf(String.valueOf(statisticsArrayList.get(position).getMonth()));
+            String year= String.valueOf(statisticsArrayList.get(position).getYear());
+            String month= String.valueOf(statisticsArrayList.get(position).getMonth());
             holder.getTime().setText(year+" "+month);
         }
         else{
-            String year= String.valueOf(String.valueOf(statisticsArrayList.get(position).getYear()));
+            String year= String.valueOf(statisticsArrayList.get(position).getYear());
             holder.getTime().setText(year);
         }
     }
-
     @Override
     public int getItemCount() {
         return statisticsArrayList.size();
     }
     //    容纳数据
     class MyHolder extends RecyclerView.ViewHolder{
+        //        时间
         private TextView time;
         //        收入
         private TextView income;

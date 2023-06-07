@@ -1,8 +1,9 @@
 package cn.edu.jnu.agile7.ui.dashboard;
 
+import java.io.Serializable;
 import java.util.UUID;
 
-public class Account {
+public class Account implements Serializable {
     private String Type;         //收入or支出
     private String category;     //哪种账目
     private double money;           //金额
@@ -63,8 +64,6 @@ public class Account {
     public void setRemake(String remake) {
         this.remake = remake;
     }
-
-
 
     public String getType() {
         return Type;

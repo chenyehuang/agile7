@@ -1,6 +1,7 @@
 package cn.edu.jnu.agile7.ui.bill;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -20,12 +21,10 @@ public class DataServer {
     {
         try {
             //字节流啥都可以
-//            FileOutputStream dataStream=context.openFileOutput("mydata.dat",Context.MODE_PRIVATE);//创建一个(文件)输出流对象
-            FileOutputStream dataStream=context.openFileOutput("mydata.dat",Context.MODE_PRIVATE);
+            FileOutputStream dataStream=context.openFileOutput("mydata.dat",Context.MODE_PRIVATE);//创建一个(文件)输出流对象
             ObjectOutputStream out = new ObjectOutputStream(dataStream); //对象写入流对象
             out.writeObject(data);
             out.close();
-
             dataStream.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -38,14 +37,14 @@ public class DataServer {
         ArrayList<Account> data=new ArrayList<>();
         try {
             FileInputStream fileIn = context.openFileInput("mydata.dat");
-
             ObjectInputStream in = new ObjectInputStream(fileIn);
             data = (ArrayList<Account>) in.readObject();//读会对象流的序列化信息，并根据对象的序列化信息建议一个对象
+            Log.i("testLoad", data.size() +"onCreate");//读取了多少条信息
             in.close();
-
             fileIn.close();
         } catch (Exception e) {
             e.printStackTrace();
+            Log.i("testLoad", e.getLocalizedMessage());
         }
         return data;
     }

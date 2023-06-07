@@ -41,7 +41,6 @@ public class DashboardFragment extends Fragment {
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-
 //        View rootView = inflater.inflate(R.layout.fragment_dashboard, container, false);
         ViewPager2 viewPager2Main = root.findViewById(R.id.viewpager2_main);
         viewPager2Main.setAdapter(new PageViewFragmentAdapter(getChildFragmentManager(), getLifecycle()));
@@ -63,7 +62,6 @@ public class DashboardFragment extends Fragment {
         tabLayoutMediator.attach();
         return root;
     }
-
 
     public static class PageViewFragmentAdapter extends FragmentStateAdapter {
         public PageViewFragmentAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {

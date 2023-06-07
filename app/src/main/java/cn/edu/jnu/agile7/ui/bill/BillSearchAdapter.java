@@ -5,7 +5,6 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,14 +20,12 @@ import cn.edu.jnu.agile7.ui.dashboard.Account;
  * @author Administrator
  */
 public class BillSearchAdapter extends RecyclerView.Adapter<BillSearchAdapter.MyHolder> {
-    private ArrayList<Account> billArrayList;
+
     private Context context;
+    private ArrayList<Account> billArrayList;
     private ImageButton imageButton;
     private BillAdapter billAdapter;
 
-    BillSearchAdapter(){
-        ;
-    }
     BillSearchAdapter(ArrayList<Account>billArrayList, Context context, BillAdapter billAdapter){//待会在activity的oncreate中需要用到
         //从主页传过来的list
         this.billArrayList=billArrayList;
@@ -58,11 +55,11 @@ public class BillSearchAdapter extends RecyclerView.Adapter<BillSearchAdapter.My
             public void onClick(View v) {
                 UUID id=billArrayList.get(position).getId();
                 removedata_search(position);
-//                得到item位置，在主页面那里也删除
+                //得到item位置，在主页面那里也删除
                 for(int i=0;i<billAdapter.getList().size();i++){
                     if (id==billAdapter.getList().get(i).getId()){
-                        billAdapter.removedata(i);
-                        //                删除后更新文件数据，即保存数据a
+                        billAdapter.removeData(i);
+                        // 删除后更新文件数据，即保存数据a
                         new DataServer().Save(context,billAdapter.getList());
                         break;
                     }
@@ -76,7 +73,7 @@ public class BillSearchAdapter extends RecyclerView.Adapter<BillSearchAdapter.My
         return billArrayList==null?0:billArrayList.size();
     }
 
-//    在搜索"窗口页面"删除数据
+    //在搜索"窗口页面"删除数据
     public void removedata_search(int position){
         billArrayList.remove(position);
         //删除动画

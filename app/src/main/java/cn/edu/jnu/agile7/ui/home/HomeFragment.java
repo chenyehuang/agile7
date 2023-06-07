@@ -19,8 +19,6 @@ import java.util.Calendar;
 
 import cn.edu.jnu.agile7.R;
 import cn.edu.jnu.agile7.databinding.FragmentHomeBinding;
-import cn.edu.jnu.agile7.ui.SharedViewModel;
-import cn.edu.jnu.agile7.ui.bill.BillFragment;
 import cn.edu.jnu.agile7.ui.bill.DataServer;
 import cn.edu.jnu.agile7.ui.dashboard.Account;
 
@@ -31,10 +29,6 @@ public class HomeFragment extends Fragment {
 
     private ImageButton returnImageButton;
     private ImageButton statisticsImagebutton;
-
-
-    private SharedViewModel sharedViewModel;
-
 
     //    统计界面需要的适配器
     RecyclerView statisticsRecycleview;
@@ -52,9 +46,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
     }
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,

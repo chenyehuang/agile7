@@ -36,7 +36,7 @@ public class IncomeFragment extends Fragment {
     private ImageView imageView_manage;
     private ImageView imageView_part_time;
     private ImageView imageView_sideline;
-    private String category;
+    private String category;//类别
     private EditText amount_money;
     private int money_number=0;
     private String select_account;
@@ -74,7 +74,6 @@ public class IncomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_income, container, false);
-
 
         imageView_salary = rootView.findViewById(R.id.salary_background);
         imageView_manage = rootView.findViewById(R.id.manage_background);
@@ -307,9 +306,7 @@ public class IncomeFragment extends Fragment {
             category = "副业";
         }
 
-
         account_income = new Account("收入", category, money_number, select_account, selectedYear, selectedMonth, selectedDay, title_string, remake_string);
-
 
         button = rootView.findViewById(R.id.income_button);
         button.setOnClickListener(new View.OnClickListener() {
@@ -319,9 +316,6 @@ public class IncomeFragment extends Fragment {
             }
         });
 
-
         return rootView;
     }
-
-
 }

@@ -3,6 +3,7 @@ package cn.edu.jnu.agile7.ui.bill;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -25,26 +26,26 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.MyHolder>{
     private ArrayList<Account> billArrayList;
     private ImageButton imageButton;
 
-    public BillAdapter(ArrayList<Account> billArrayList, Context context) {//待会在activity的oncreate中需要用到
-        this.billArrayList=billArrayList;//从主页传过来的
-        this.context = context;//因为和主页分离了，所以需要获取主页上下文
-    }
-
+    DataServer dataServer = new DataServer();
     //获取列表
     public ArrayList<Account> getList(){
         return this.billArrayList;
     }
     public void setList(ArrayList<Account>billArrayList){this.billArrayList=billArrayList;}
 
-    @NonNull
-    @Override
-    public BillAdapter.MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        //定义布局
-        View v1=View.inflate(context, R.layout.accountitem,null);
-        //或者View v1= LayoutInflater.from(xxActivity.this).inflate(R.layout.itemlayout,parent,false);
-        return new MyHolder(v1);
+    public BillAdapter(ArrayList<Account> billArrayList, Context context) {//待会在activity的oncreate中需要用到
+        this.billArrayList=billArrayList;//从主页传过来的
+        this.context = context;//因为和主页分离了，所以需要获取主页上下文
     }
 
+    @NonNull
+    @Override
+    public BillAdapter.MyHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+        //定义布局
+        View v1 = LayoutInflater.from(viewGroup.getContext())//Context:当前情景，作用等同于setContentView()
+            .inflate(R.layout.accountitem, viewGroup, false);
+        return new MyHolder(v1);
+    }
     @Override
     public void onBindViewHolder(@NonNull BillAdapter.MyHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.gettextviewBillName().setText(billArrayList.get(position).getTitle());
@@ -52,29 +53,28 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.MyHolder>{
         holder.gettextviewMonth().setText(String.valueOf(billArrayList.get(position).getMonth()));
         holder.gettextviewDay().setText(String.valueOf(billArrayList.get(position).getDay()));
         holder.gettextviewAmount().setText(String.valueOf(billArrayList.get(position).getMoney()));
-//        删除数据
+
+        //删除数据
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                removedata(position);
+                removeData(position);
                 Log.i("billList",String.valueOf(billArrayList.size())+"adapter");
-//                删除后更新文件数据，即保存数据
-                new DataServer().Save(context,billArrayList);
+                //删除后更新文件数据，即保存数据
+                dataServer.Save(context, billArrayList);
             }
         });
     }
-
-    @Override
-    public int getItemCount() {
-        return billArrayList==null?0:billArrayList.size();
-    }
-
-    public void removedata(int position){
+    public void removeData(int position){
         billArrayList.remove(position);
         //删除动画
         notifyItemRemoved(position);
-//        有可能删除中间的item会出现错乱，所以下面changed一次
+        //有可能删除中间的item会出现错乱，所以下面changed一次
         notifyDataSetChanged();
+    }
+    @Override
+    public int getItemCount() {
+        return billArrayList==null?0:billArrayList.size();
     }
 
     class MyHolder extends RecyclerView.ViewHolder{
