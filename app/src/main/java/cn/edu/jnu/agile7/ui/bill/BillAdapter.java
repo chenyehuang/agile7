@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import cn.edu.jnu.agile7.R;
-import cn.edu.jnu.agile7.ui.dashboard.Account;
+import cn.edu.jnu.agile7.ui.dashboard.Bill;
 
 /**
  * @author Administrator
@@ -22,19 +22,19 @@ import cn.edu.jnu.agile7.ui.dashboard.Account;
 public class BillAdapter extends RecyclerView.Adapter<BillAdapter.MyHolder>{
     //设置context，让其他界面调用
     private Context context;
-    private ArrayList<Account> billArrayList;
+    private ArrayList<Bill> billArrayList;
     private ImageButton imageButton;
 
-    public BillAdapter(ArrayList<Account> billArrayList, Context context) {//待会在activity的oncreate中需要用到
+    public BillAdapter(ArrayList<Bill> billArrayList, Context context) {//待会在activity的oncreate中需要用到
         this.billArrayList=billArrayList;//从主页传过来的
         this.context = context;//因为和主页分离了，所以需要获取主页上下文
     }
 
     //获取列表
-    public ArrayList<Account> getList(){
+    public ArrayList<Bill> getList(){
         return this.billArrayList;
     }
-    public void setList(ArrayList<Account>billArrayList){this.billArrayList=billArrayList;}
+    public void setList(ArrayList<Bill>billArrayList){this.billArrayList=billArrayList;}
 
     @NonNull
     @Override

@@ -2,7 +2,7 @@ package cn.edu.jnu.agile7.ui.dashboard;
 
 import java.util.UUID;
 
-public class Account {
+public class Bill {
     private String Type;         //收入or支出
     private String category;     //哪种账目
     private double money;           //金额
@@ -14,7 +14,7 @@ public class Account {
     private String remake;
     private UUID id;            //用于搜集界面那里点击删除后返回主界面，然后主界面也要删除(需要用这个id遍历检索才能找到)
 
-    public Account(String type, String category, double money, String account, int year, int month, int day, String title, String remake) {
+    public Bill(String type, String category, double money, String account, int year, int month, int day, String title, String remake) {
         Type = type;
         this.category = category;
         this.money = money;

@@ -42,7 +42,7 @@ public class ExpenditureFragment extends Fragment {
     private EditText Remake;
     private String remake_string;
     private Button button;
-    private Account account_expend;
+    private Bill account_expend;
 
 
     public ExpenditureFragment() {
@@ -159,10 +159,15 @@ public class ExpenditureFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!s.toString().isEmpty()) {
+                    money_number = Integer.parseInt(s.toString());
+                }  // 处理空字符串的情况
                 // 在文本改变时执行的操作
-                String inputText = s.toString();
-                money_number = Integer.parseInt(inputText);
-                Log.i(String.valueOf(money_number), "input_number");
+                else {
+//                    String inputText = s.toString();
+//                    money_number = Integer.parseInt(inputText);
+                    Log.i(String.valueOf(money_number), "input_number");
+                }
             }
 
             @Override
@@ -298,7 +303,7 @@ public class ExpenditureFragment extends Fragment {
         }
 
 
-        account_expend = new Account("支出", category, money_number, select_account, selectedYear, selectedMonth, selectedDay, title_string, remake_string);
+        account_expend = new Bill("支出", category, money_number, select_account, selectedYear, selectedMonth, selectedDay, title_string, remake_string);
 
         button = rootView.findViewById(R.id.expend_button);
         button.setOnClickListener(new View.OnClickListener() {

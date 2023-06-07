@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidStudioProjects/Test/agile7/app/src/main/res/layout/activity_account_add.xml" value="0.14739583333333334" />
+        <entry key="..\:/AndroidStudioProjects/Test/agile7/app/src/main/res/layout/fragment_account.xml" value="0.14739583333333334" />
+        <entry key="..\:/AndroidStudioProjects/Test/agile7/app/src/main/res/layout/fragment_accountragment.xml" value="0.16197916666666667" />
+        <entry key="..\:/AndroidStudioProjects/Test/agile7/app/src/main/res/layout/item_account.xml" value="0.16197916666666667" />
         <entry key="..\:/AndroidStudioProjects/agile7/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2235" />
         <entry key="..\:/AndroidStudioProjects/agile7/app/src/main/res/drawable/circle_background.xml" value="0.2535" />
         <entry key="..\:/AndroidStudioProjects/agile7/app/src/main/res/drawable/circle_background2.xml" value="0.1435" />

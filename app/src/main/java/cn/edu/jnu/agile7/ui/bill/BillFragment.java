@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import cn.edu.jnu.agile7.R;
 import cn.edu.jnu.agile7.databinding.FragmentDashboardBinding;
 import cn.edu.jnu.agile7.ui.SharedViewModel;
-import cn.edu.jnu.agile7.ui.dashboard.Account;
+import cn.edu.jnu.agile7.ui.dashboard.Bill;
 
 public class BillFragment extends Fragment {
     private FragmentDashboardBinding binding;
@@ -34,10 +34,10 @@ public class BillFragment extends Fragment {
     private BillAdapter billadapter;
 
 //账目记录界面的列表
-    private ArrayList<Account> accountArrayList = new ArrayList<>();
+    private ArrayList<Bill> accountArrayList = new ArrayList<>();
 
 //    存储搜索数据的列表
-    private ArrayList<Account>filterbills;
+    private ArrayList<Bill>filterbills;
     private SearchView searchView;
 
 //    用于搜索功能的适配器,会同步搜索内容更新列表
@@ -50,9 +50,9 @@ public class BillFragment extends Fragment {
         accountArrayList=dataServer.Load(BillFragment.this.getContext());
         Log.i("billList",String.valueOf(accountArrayList.size())+"onCreate");//还是为0，data.dat为空？？？？？》
 
-        Account account=new Account("支出","餐饮",-1000.0,"支付宝",2021,5,20,"美团外卖","好吃");
-        Account account2=new Account("支出","餐饮",-100.0,"支付宝",2022,5,20,"美团外卖2","好吃");
-        Account account3=new Account("支出","餐饮",-10.0,"支付宝",2023,5,20,"美团外卖3","好吃");
+        Bill account=new Bill("支出","餐饮",-1000.0,"支付宝",2021,5,20,"美团外卖","好吃");
+        Bill account2=new Bill("支出","餐饮",-100.0,"支付宝",2022,5,20,"美团外卖2","好吃");
+        Bill account3=new Bill("支出","餐饮",-10.0,"支付宝",2023,5,20,"美团外卖3","好吃");
 
 
         if(accountArrayList.size()==0) {
@@ -122,9 +122,9 @@ public class BillFragment extends Fragment {
     }
 
     //搜索的过滤器
-    private ArrayList<Account>filter(ArrayList<Account>strings,String text){
+    private ArrayList<Bill>filter(ArrayList<Bill>strings, String text){
         filterbills = new ArrayList<>();
-        for (Account bill: billadapter.getList()){
+        for (Bill bill: billadapter.getList()){
             if (bill.getTitle().contains(text)) {
                 filterbills.add(bill);
             }

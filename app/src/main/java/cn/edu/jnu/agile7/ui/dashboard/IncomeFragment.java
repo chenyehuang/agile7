@@ -48,7 +48,7 @@ public class IncomeFragment extends Fragment {
     private EditText Remake;
     private String remake_string;
     private Button button;
-    private Account account_income;
+    private Bill account_income;
 
     public IncomeFragment() {
         // Required empty public constructor
@@ -171,10 +171,15 @@ public class IncomeFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!s.toString().isEmpty()) {
+                    money_number = Integer.parseInt(s.toString());
+                }  // 处理空字符串的情况
                 // 在文本改变时执行的操作
-                String inputText = s.toString();
-                money_number = Integer.parseInt(inputText);
-                Log.i(String.valueOf(money_number), "input_number");
+                else {
+//                    String inputText = s.toString();
+//                    money_number = Integer.parseInt(inputText);
+                    Log.i(String.valueOf(money_number), "input_number");
+                }
             }
 
             @Override
@@ -308,7 +313,7 @@ public class IncomeFragment extends Fragment {
         }
 
 
-        account_income = new Account("收入", category, money_number, select_account, selectedYear, selectedMonth, selectedDay, title_string, remake_string);
+        account_income = new Bill("收入", category, money_number, select_account, selectedYear, selectedMonth, selectedDay, title_string, remake_string);
 
 
         button = rootView.findViewById(R.id.income_button);

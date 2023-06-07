@@ -20,7 +20,7 @@ import java.util.Calendar;
 import cn.edu.jnu.agile7.R;
 import cn.edu.jnu.agile7.databinding.FragmentHomeBinding;
 import cn.edu.jnu.agile7.ui.SharedViewModel;
-import cn.edu.jnu.agile7.ui.dashboard.Account;
+import cn.edu.jnu.agile7.ui.dashboard.Bill;
 
 
 public class HomeFragment extends Fragment {
@@ -165,12 +165,12 @@ public class HomeFragment extends Fragment {
     }
 
     //    查询，将找到的对应日期的账单添加到statisticsArrayList中
-    public void query(ArrayList<Account>billArrayList){
+    public void query(ArrayList<Bill>billArrayList){
         double income=0;
         double expanditure=0;
         double sum=0;
         Statistics statistics;
-        Account bill;
+        Bill bill;
         if(billArrayList!=null&&billArrayList.size()!=0){
 //            只查询年份 如 2023.0-2024.0
             if(selectedStartMonth==0&&selectedEndMonth==0)
