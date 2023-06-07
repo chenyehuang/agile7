@@ -20,6 +20,8 @@ import java.util.Calendar;
 import cn.edu.jnu.agile7.R;
 import cn.edu.jnu.agile7.databinding.FragmentHomeBinding;
 import cn.edu.jnu.agile7.ui.SharedViewModel;
+import cn.edu.jnu.agile7.ui.bill.BillFragment;
+import cn.edu.jnu.agile7.ui.bill.DataServer;
 import cn.edu.jnu.agile7.ui.dashboard.Account;
 
 
@@ -113,7 +115,7 @@ public class HomeFragment extends Fragment {
         NumberPicker npYear2 = rootView.findViewById(R.id.statistics_end_np_year);
         NumberPicker npMonth2 = rootView.findViewById(R.id.statistics_end_np_month);
 
-        // 设置NumberPicker的范围,当前的前后100年
+        // 设置NumberPicker的范围,当前的前后5年
         npYear2.setMinValue(year - 5);
         npYear2.setMaxValue(year + 5);
         npYear2.setValue(year);
@@ -146,19 +148,23 @@ public class HomeFragment extends Fragment {
         statisticsRecycleview.setAdapter(homeadapter);
         homeadapter.notifyDataSetChanged();
 
+
         statisticsImagebutton=rootView.findViewById(R.id.statistics_imageButton);
         statisticsImagebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sharedViewModel.getBillList().observe(getViewLifecycleOwner(), billArrayList -> {
-                    // 使用获取到的数据
-                    Log.i("testlist",String.valueOf(billArrayList.size()));//可以正常显示
+//                sharedViewModel.getBillList().observe(getViewLifecycleOwner(), billArrayList -> {
+//                    // 使用获取到的数据
+//                    Log.i("testlist",String.valueOf(billArrayList.size()));//可以正常显示
                     statisticsArrayList.clear();//每一次查询之前先清空
-                    query(billArrayList);
+//                    query(billArrayList);
+                //        从文件中加载数据
+                    ArrayList<Account>accountArrayList = new DataServer().Load(HomeFragment.this.getContext());
+                    query(accountArrayList);
                     statisticsRecycleview.setAdapter(homeadapter);
                     homeadapter.setStatisticsArrayList(statisticsArrayList);
                     homeadapter.notifyDataSetChanged();
-                });
+//                });
             }
         });
         return rootView;

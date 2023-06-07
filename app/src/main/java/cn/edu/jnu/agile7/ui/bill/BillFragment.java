@@ -26,7 +26,6 @@ import cn.edu.jnu.agile7.ui.SharedViewModel;
 import cn.edu.jnu.agile7.ui.dashboard.Account;
 
 public class BillFragment extends Fragment {
-    private FragmentDashboardBinding binding;
     private SharedViewModel sharedViewModel;
 
     private RecyclerView recycleViewbill;
@@ -47,6 +46,7 @@ public class BillFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+//        从文件中加载数据
         accountArrayList=dataServer.Load(BillFragment.this.getContext());
         Log.i("billList",String.valueOf(accountArrayList.size())+"onCreate");//还是为0，data.dat为空？？？？？》
 
@@ -54,16 +54,16 @@ public class BillFragment extends Fragment {
         Account account2=new Account("支出","餐饮",-100.0,"支付宝",2022,5,20,"美团外卖2","好吃");
         Account account3=new Account("支出","餐饮",-10.0,"支付宝",2023,5,20,"美团外卖3","好吃");
 
-
+//        如果从文件中加载的数据长度为0，自动先加入三条数据
         if(accountArrayList.size()==0) {
             accountArrayList.add(0,account);
             accountArrayList.add(1,account2);
             accountArrayList.add(2,account3);
         }
-////        initListdata();
+
         Log.i("billList",String.valueOf(accountArrayList.size())+"onCreate2");
-        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-        sharedViewModel.setBillList(accountArrayList);
+//        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+//        sharedViewModel.setBillList(accountArrayList);
 
         View rootView = inflater.inflate(R.layout.fragment_bill, container, false);
 
@@ -165,6 +165,5 @@ public class BillFragment extends Fragment {
         Log.i("billList",String.valueOf(accountArrayList.size())+"onDestroy2");
         dataServer.Save(BillFragment.this.getContext(),accountArrayList);
         super.onDestroyView();
-        binding = null;
     }
 }

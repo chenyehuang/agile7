@@ -58,6 +58,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.MyHolder>{
             public void onClick(View v) {
                 removedata(position);
                 Log.i("billList",String.valueOf(billArrayList.size())+"adapter");
+//                删除后更新文件数据，即保存数据
                 new DataServer().Save(context,billArrayList);
             }
         });

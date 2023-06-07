@@ -62,6 +62,9 @@ public class BillSearchAdapter extends RecyclerView.Adapter<BillSearchAdapter.My
                 for(int i=0;i<billAdapter.getList().size();i++){
                     if (id==billAdapter.getList().get(i).getId()){
                         billAdapter.removedata(i);
+                        //                删除后更新文件数据，即保存数据a
+                        new DataServer().Save(context,billAdapter.getList());
+                        break;
                     }
                 }
             }
@@ -73,6 +76,7 @@ public class BillSearchAdapter extends RecyclerView.Adapter<BillSearchAdapter.My
         return billArrayList==null?0:billArrayList.size();
     }
 
+//    在搜索"窗口页面"删除数据
     public void removedata_search(int position){
         billArrayList.remove(position);
         //删除动画
