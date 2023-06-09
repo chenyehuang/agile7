@@ -7,7 +7,7 @@
     tools:context=".ui.notifications.AccountAddActivity">
 
     <EditText
-        android:id="@+id/editTextTextPersonName4"
+        android:id="@+id/account_money"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="56dp"
@@ -16,7 +16,7 @@
         android:inputType="number"
         android:hint="number"
         app:layout_constraintStart_toEndOf="@+id/textView14"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2"
+        app:layout_constraintTop_toBottomOf="@+id/account_name"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -49,7 +49,7 @@
         app:layout_constraintVertical_bias="0.063" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName2"
+        android:id="@+id/account_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="56dp"

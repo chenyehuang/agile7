@@ -30,7 +30,7 @@ public class AccountFragment extends Fragment {
     private View view;
     private FragmentHomeBinding binding;
     private AccountFragment.CustomAdapter recyclerViewAdapter;
-    private List<Account> accountsShow;
+    private ArrayList<Account> accountsShow;
     @SuppressLint("NotifyDataSetChanged")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -38,8 +38,6 @@ public class AccountFragment extends Fragment {
         view =  inflater.inflate(R.layout.fragment_account, container, false);
         accountsShow = new ArrayList<>();
         Account account = new Account("工商银行", 1000);
-
-
         accountsShow.add(account);
         accountsShow.add(account);
         accountsShow.add(account);
@@ -53,18 +51,16 @@ public class AccountFragment extends Fragment {
     private final ActivityResultLauncher<Intent> accountAddLaunch = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(), result -> {
                 if (null != result) {
+                    Intent intent=result.getData();
+                    if(result.getResultCode()==AccountAddActivity.RESULT_CODE_ADD)
+                    {
 
+                    }
                 }
             }
     );
 
-    private final ActivityResultLauncher<Intent> accountDetailsLaunch = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(), result -> {
-                if (null != result) {
 
-                }
-            }
-    );
 
     private void initRecyclerView() {
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_fg_account);

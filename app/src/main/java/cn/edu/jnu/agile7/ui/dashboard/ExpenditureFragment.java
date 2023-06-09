@@ -151,31 +151,6 @@ public class ExpenditureFragment extends Fragment {
 
         amount_money = (EditText) rootView.findViewById(R.id.expend_money);
 
-        amount_money.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // 在文本改变前执行的操作（这里可以不做处理）
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!s.toString().isEmpty()) {
-                    money_number = Integer.parseInt(s.toString());
-                }  // 处理空字符串的情况
-                // 在文本改变时执行的操作
-                else {
-//                    String inputText = s.toString();
-//                    money_number = Integer.parseInt(inputText);
-                    Log.i(String.valueOf(money_number), "input_number");
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                // 在文本改变后执行的操作
-            }
-        });
-
 
         String[] options = {"账户1", "账户2", "账户3"};
         ArrayList<String> account_List = new ArrayList<>(Arrays.asList(options));
@@ -202,7 +177,6 @@ public class ExpenditureFragment extends Fragment {
                 // 当没有选项被选择时的处理
             }
         });
-
 
         // 获取当前日期
         Calendar calendar = Calendar.getInstance();
@@ -240,54 +214,8 @@ public class ExpenditureFragment extends Fragment {
             }
         });
 
-        // 获取选定的日期
-        selectedYear = npYear.getValue();
-        selectedMonth = npMonth.getValue();
-        selectedDay = npDay.getValue();
-
-        // 将日期转换为字符串
-//        String selectedDate = String.format("%d-%02d-%02d", selectedYear, selectedMonth, selectedDay);
-
-
         Title = (EditText) rootView.findViewById(R.id.expend_title);
-
-        Title.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // 在文本改变前执行的操作（这里可以不做处理）
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // 在文本改变时执行的操作
-                title_string =  s.toString();
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                // 在文本改变后执行的操作
-            }
-        });
-
         Remake = (EditText) rootView.findViewById(R.id.expend_remark);
-
-        Remake.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // 在文本改变前执行的操作（这里可以不做处理）
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // 在文本改变时执行的操作
-                remake_string =  s.toString();
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                // 在文本改变后执行的操作
-            }
-        });
 
         if (clickedComponentFlag[0]==1){
             category = "餐饮";
@@ -302,18 +230,12 @@ public class ExpenditureFragment extends Fragment {
             category = "其他";
         }
 
-
-        account_expend = new Bill("支出", category, money_number, select_account, selectedYear, selectedMonth, selectedDay, title_string, remake_string);
-
         button = rootView.findViewById(R.id.expend_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //点击时操作
             }
         });
-
-
         return rootView;
     }
 }

@@ -1,8 +1,9 @@
 package cn.edu.jnu.agile7.ui.dashboard;
 
+import java.io.Serializable;
 import java.util.UUID;
 
-public class Bill {
+public class Bill implements Serializable {
     private String Type;         //收入or支出
     private String category;     //哪种账目
     private double money;           //金额

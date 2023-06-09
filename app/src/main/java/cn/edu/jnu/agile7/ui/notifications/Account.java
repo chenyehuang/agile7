@@ -1,9 +1,9 @@
 package cn.edu.jnu.agile7.ui.notifications;
 public class Account {
     private String name;
-    private float amount;
+    private double amount;
 
-    public Account(String name, float amount) {
+    public Account(String name, double amount) {
         this.name = name;
         this.amount = amount;
     }
@@ -12,7 +12,7 @@ public class Account {
         this.name = name;
     }
 
-    public void setAmount(float amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
@@ -20,7 +20,7 @@ public class Account {
         return name;
     }
 
-    public float getAmount() {
+    public double getAmount() {
         return amount;
     }
 }
