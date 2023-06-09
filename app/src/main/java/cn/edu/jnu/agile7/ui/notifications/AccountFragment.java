@@ -54,12 +54,19 @@ public class AccountFragment extends Fragment {
                     Intent intent=result.getData();
                     if(result.getResultCode()==AccountAddActivity.RESULT_CODE_ADD)
                     {
+                        AddAccount(intent);
                     }
                 }
             }
     );
 
-
+    public void AddAccount(Intent intent){
+        Bundle bundle = intent.getExtras();
+        String name = bundle.getString("account_name");
+        double money = bundle.getDouble("account_money");
+        accountsShow.add(new Account(name, money));
+        recyclerViewAdapter.notifyItemChanged(accountsShow.size());
+    }
 
     private void initRecyclerView() {
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_fg_account);
