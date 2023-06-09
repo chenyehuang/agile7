@@ -54,7 +54,6 @@ public class AccountFragment extends Fragment {
                     Intent intent=result.getData();
                     if(result.getResultCode()==AccountAddActivity.RESULT_CODE_ADD)
                     {
-
                     }
                 }
             }

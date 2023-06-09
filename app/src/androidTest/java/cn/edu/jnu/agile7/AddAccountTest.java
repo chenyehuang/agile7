@@ -27,7 +27,6 @@ import androidx.test.filters.LargeTest;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -37,8 +36,9 @@ import cn.edu.jnu.agile7.ui.notifications.Account;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class AccountAddTest {
+public class AddAccountTest {
     private Account account;
+
 
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
@@ -46,17 +46,16 @@ public class AccountAddTest {
 
     @Before
     public void setUp(){
-        account = new Account("test_name", 1231);
+        account = new Account("123", 456);
     }
 
-    @After
     public void teardown(){
         account = null;
     }
 
 
     @Test
-    public void accountAddTest() {
+    public void addAccountTest() {
         ViewInteraction bottomNavigationItemView = onView(
                 allOf(withId(R.id.navigation_notifications), withContentDescription("Notifications"),
                         childAtPosition(
@@ -85,7 +84,7 @@ public class AccountAddTest {
                                         0),
                                 3),
                         isDisplayed()));
-        appCompatEditText.perform(replaceText("test_name"), closeSoftKeyboard());
+        appCompatEditText.perform(replaceText("123"), closeSoftKeyboard());
 
         ViewInteraction appCompatEditText2 = onView(
                 allOf(withId(R.id.account_money),
@@ -95,7 +94,7 @@ public class AccountAddTest {
                                         0),
                                 0),
                         isDisplayed()));
-        appCompatEditText2.perform(replaceText("321232"), closeSoftKeyboard());
+        appCompatEditText2.perform(replaceText("456"), closeSoftKeyboard());
 
         ViewInteraction materialButton2 = onView(
                 allOf(withId(R.id.button_confirm_add_account), withText("保存"),
@@ -108,18 +107,18 @@ public class AccountAddTest {
         materialButton2.perform(click());
 
         ViewInteraction textView = onView(
-                allOf(withId(R.id.textView_account_item_name), withText("账户名称是"),
+                allOf(withId(R.id.textView_account_item_name), withText(account.getName()),
                         withParent(allOf(withId(R.id.constraintLayout_account_item),
                                 withParent(withId(R.id.recyclerView_fg_account)))),
                         isDisplayed()));
-        textView.check(matches(withText("账户名称是")));
+        textView.check(matches(withText(account.getName())));
 
         ViewInteraction textView2 = onView(
-                allOf(withId(R.id.textView_account_item_money), withText("1000.0"),
+                allOf(withId(R.id.textView_account_item_money), withText(String.valueOf(account.getAmount())),
                         withParent(allOf(withId(R.id.constraintLayout_account_item),
                                 withParent(withId(R.id.recyclerView_fg_account)))),
                         isDisplayed()));
-        textView2.check(matches(withText("1000.0")));
+        textView2.check(matches(withText(String.valueOf(account.getAmount()))));
     }
 
     private static Matcher<View> childAtPosition(
