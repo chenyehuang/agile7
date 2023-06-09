@@ -223,9 +223,70 @@ public class IncomeFragment extends Fragment {
         Remake = (EditText) rootView.findViewById(R.id.income_remark);
 
         button = rootView.findViewById(R.id.income_button);
-
+        BillAdd();
         return rootView;
     }
 
+    public void BillAdd(){
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (clickedComponentFlag[0] == 1){
+                    category = "工资";
+                }
+                else if(clickedComponentFlag[0]==2){
+                    category = "理财";
+                }
+                else if(clickedComponentFlag[0]==3){
+                    category = "兼职";
+                }
+                else if(clickedComponentFlag[0]==4){
+                    category = "副业";
+                }
+
+                if (!amount_money.getText().toString().isEmpty()) {
+                    money_number = Integer.parseInt(amount_money.getText().toString());
+                }
+
+                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                        String selectedOption = account_List.get(position);
+                        select_account = account_List.get(position);
+//                Log.i(select_account, "select");
+                        // 在这里处理选择的选项
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        // 当没有选项被选择时的处理
+                    }
+                });
+
+
+                title_string = Title.getText().toString();
+                remake_string = Remake.getText().toString();
+                // 获取选定的日期
+                selectedYear = npYear.getValue();
+                selectedMonth = npMonth.getValue();
+                selectedDay = npDay.getValue();
+                account_income = new Bill("收入", category, money_number, select_account, selectedYear, selectedMonth, selectedDay, title_string, remake_string);
+
+                // 创建 Bundle 对象
+                Bundle bundle = new Bundle();
+
+                // 将账目实例作为参数传递给 Bundle
+                bundle.putSerializable("bill", account_income);
+
+                // 创建 BillFragment 实例
+                BillFragment billFragment = new BillFragment();
+                billFragment.setArguments(bundle);
+                Log.i(String.valueOf(bundle), "bundle_11");
+                // 使用导航组件进行页面跳转并传递 Bundle
+                Navigation.findNavController(rootView).navigate(R.id.navigation_bill, bundle);
+
+            }
+        });
+    }
 
 }
