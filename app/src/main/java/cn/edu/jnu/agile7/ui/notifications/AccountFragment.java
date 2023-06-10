@@ -1,12 +1,14 @@
 package cn.edu.jnu.agile7.ui.notifications;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -117,6 +119,14 @@ public class AccountFragment extends Fragment {
                 constraintLayout = view.findViewById(R.id.constraintLayout_account_item);
                 textViewName = view.findViewById(R.id.textView_account_item_name);
                 textViewMoney = view.findViewById(R.id.textView_account_item_money);
+
+                constraintLayout.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        showDeleteDialog(getAdapterPosition()); // 弹出删除对话框
+                        return true;
+                    }
+                });
             }
 
             public TextView getTextViewName() {
@@ -154,6 +164,14 @@ public class AccountFragment extends Fragment {
             ConstraintLayout constraintLayout = viewHolder.getConstraintLayout();
             constraintLayout.setOnClickListener(onClickListener);
             constraintLayout.setOnLongClickListener(onLongClickListener);
+            constraintLayout.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    showDeleteDialog(viewHolder.getAdapterPosition()); // 弹出删除对话框
+                    return true;
+                }
+            });
+
         }
 
         @Override
@@ -169,6 +187,29 @@ public class AccountFragment extends Fragment {
             this.onLongClickListener = onLongClickListener;
         }
     }
+
+    private void showDeleteDialog(final int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("删除")
+                .setMessage("确定要删除这个项吗？")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+//                        deleteItem(position); // 删除选中项
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss(); // 取消删除，关闭对话框
+                    }
+                })
+                .create()
+                .show();
+    }
+
+
+
 
     public static AccountFragment newInstance() {
         AccountFragment fragment = new AccountFragment();
