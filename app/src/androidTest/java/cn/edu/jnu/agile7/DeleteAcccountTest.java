@@ -59,7 +59,10 @@ public class DeleteAcccountTest {
         dataSaverBackup=new AccountServer();
         Context targetContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         accountItemsBackup=dataSaverBackup.Load(targetContext);
-
+        if (accountItemsBackup.size() == 0){
+            accountItemsBackup.add(new Account("321", 654));
+            accountItemsBackup.add(new Account("123", 456));
+        }
     }
 
     @After
