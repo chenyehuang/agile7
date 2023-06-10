@@ -40,7 +40,7 @@ public class AccountFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         view =  inflater.inflate(R.layout.fragment_account, container, false);
-
+        accountsShow = new AccountServer().Load(this.getContext());
         initAddButton();
         initRecyclerView();
         recyclerViewAdapter.notifyDataSetChanged();
@@ -64,6 +64,7 @@ public class AccountFragment extends Fragment {
         String name = bundle.getString("account_name");
         double money = bundle.getDouble("account_money");
         accountsShow.add(new Account(name, money));
+        new AccountServer().Save(this.getContext(), accountsShow);
         recyclerViewAdapter.notifyItemChanged(accountsShow.size());
     }
 
@@ -185,6 +186,7 @@ public class AccountFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        new AccountServer().Save(this.getContext(), accountsShow);
         binding = null;
     }
 
