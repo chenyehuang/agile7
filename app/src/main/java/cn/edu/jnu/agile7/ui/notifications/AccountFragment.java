@@ -9,9 +9,11 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,20 +29,17 @@ import cn.edu.jnu.agile7.databinding.FragmentHomeBinding;
 
 public class AccountFragment extends Fragment {
 
+    private AccountViewModel accountViewModel;
     private View view;
     private FragmentHomeBinding binding;
     private AccountFragment.CustomAdapter recyclerViewAdapter;
-    private ArrayList<Account> accountsShow;
+    private ArrayList<Account> accountsShow =  new ArrayList<>();
+
     @SuppressLint("NotifyDataSetChanged")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         view =  inflater.inflate(R.layout.fragment_account, container, false);
-        accountsShow = new ArrayList<>();
-        Account account = new Account("工商银行", 1000);
-        accountsShow.add(account);
-        accountsShow.add(account);
-        accountsShow.add(account);
 
         initAddButton();
         initRecyclerView();
@@ -73,7 +72,6 @@ public class AccountFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-
         recyclerViewAdapter = new AccountFragment.CustomAdapter(accountsShow);
         recyclerViewAdapter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,7 +169,7 @@ public class AccountFragment extends Fragment {
         }
     }
 
-    public static AccountFragment newInstance(String param1, String param2) {
+    public static AccountFragment newInstance() {
         AccountFragment fragment = new AccountFragment();
         Bundle args = new Bundle();
 
@@ -181,7 +179,7 @@ public class AccountFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        accountViewModel = new ViewModelProvider(this).get(AccountViewModel.class);
     }
 
     @Override

@@ -1,5 +1,8 @@
 package cn.edu.jnu.agile7.ui.notifications;
-public class Account {
+
+import java.io.Serializable;
+
+public class Account implements Serializable {
     private String name;
     private double amount;
 
