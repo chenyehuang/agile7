@@ -195,7 +195,7 @@ public class AccountFragment extends Fragment {
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-//                        deleteItem(position); // 删除选中项
+                        deleteItem(position); // 删除选中项
                     }
                 })
                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -208,6 +208,12 @@ public class AccountFragment extends Fragment {
                 .show();
     }
 
+
+    public void deleteItem(int position){
+        accountsShow.remove(position);
+        new AccountServer().Save(this.getContext(), accountsShow);
+        recyclerViewAdapter.notifyItemRemoved(position);
+    }
 
 
 
