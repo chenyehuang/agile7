@@ -20,7 +20,7 @@ import java.util.Calendar;
 import cn.edu.jnu.agile7.R;
 import cn.edu.jnu.agile7.databinding.FragmentHomeBinding;
 import cn.edu.jnu.agile7.ui.bill.DataServer;
-import cn.edu.jnu.agile7.ui.dashboard.Account;
+import cn.edu.jnu.agile7.ui.dashboard.Bill;
 
 
 public class HomeFragment extends Fragment {
@@ -145,30 +145,26 @@ public class HomeFragment extends Fragment {
         statisticsImagebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                sharedViewModel.getBillList().observe(getViewLifecycleOwner(), billArrayList -> {
-//                    // 使用获取到的数据
-//                    Log.i("testlist",String.valueOf(billArrayList.size()));//可以正常显示
-                    statisticsArrayList.clear();//每一次查询之前先清空
-//                    query(billArrayList);
-                //        从文件中加载数据
-                    ArrayList<Account>accountArrayList = new DataServer().Load(HomeFragment.this.getContext());
-                    query(accountArrayList);
-                    statisticsRecycleview.setAdapter(homeadapter);
-                    homeadapter.setStatisticsArrayList(statisticsArrayList);
-                    homeadapter.notifyDataSetChanged();
-//                });
+                statisticsArrayList.clear();//每一次查询之前先清空
+                //从文件中加载数据
+                ArrayList<Account>accountArrayList = new DataServer().Load(HomeFragment.this.getContext());
+                query(accountArrayList);
+                statisticsRecycleview.setAdapter(homeadapter);
+                homeadapter.setStatisticsArrayList(statisticsArrayList);
+                homeadapter.notifyDataSetChanged();
+
             }
         });
         return rootView;
     }
 
     //    查询，将找到的对应日期的账单添加到statisticsArrayList中
-    public void query(ArrayList<Account>billArrayList){
+    public void query(ArrayList<Bill>billArrayList){
         double income=0;
         double expanditure=0;
         double sum=0;
         Statistics statistics;
-        Account bill;
+        Bill bill;
         if(billArrayList!=null&&billArrayList.size()!=0){
 //            只查询年份 如 2023.0-2024.0
             if(selectedStartMonth==0&&selectedEndMonth==0)

@@ -3,7 +3,6 @@ package cn.edu.jnu.agile7.ui.bill;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -15,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import cn.edu.jnu.agile7.R;
-import cn.edu.jnu.agile7.ui.dashboard.Account;
+import cn.edu.jnu.agile7.ui.dashboard.Bill;
 
 /**
  * @author Administrator
@@ -23,27 +22,27 @@ import cn.edu.jnu.agile7.ui.dashboard.Account;
 public class BillAdapter extends RecyclerView.Adapter<BillAdapter.MyHolder>{
     //设置context，让其他界面调用
     private Context context;
-    private ArrayList<Account> billArrayList;
+    private ArrayList<Bill> billArrayList;
     private ImageButton imageButton;
 
     DataServer dataServer = new DataServer();
     //获取列表
-    public ArrayList<Account> getList(){
+    public ArrayList<Bill> getList(){
         return this.billArrayList;
     }
-    public void setList(ArrayList<Account>billArrayList){this.billArrayList=billArrayList;}
+    public void setList(ArrayList<Bill>billArrayList){this.billArrayList=billArrayList;}
 
-    public BillAdapter(ArrayList<Account> billArrayList, Context context) {//待会在activity的oncreate中需要用到
+    public BillAdapter(ArrayList<Bill> billArrayList, Context context) {//待会在activity的oncreate中需要用到
         this.billArrayList=billArrayList;//从主页传过来的
         this.context = context;//因为和主页分离了，所以需要获取主页上下文
     }
 
     @NonNull
     @Override
-    public BillAdapter.MyHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+    public BillAdapter.MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //定义布局
-        View v1 = LayoutInflater.from(viewGroup.getContext())//Context:当前情景，作用等同于setContentView()
-            .inflate(R.layout.accountitem, viewGroup, false);
+        View v1=View.inflate(context, R.layout.accountitem,null);
+        //或者View v1= LayoutInflater.from(xxActivity.this).inflate(R.layout.itemlayout,parent,false);
         return new MyHolder(v1);
     }
     @Override
