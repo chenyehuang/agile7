@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- spinner_item.xml -->
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textSize="23sp"
+    android:background="#FAFAD2"
+    android:textColor="#000000" />  <!-- 设置颜色，例如红色 -->
