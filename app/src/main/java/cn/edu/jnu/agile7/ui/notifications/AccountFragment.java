@@ -232,9 +232,9 @@ public class AccountFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
         new AccountServer().Save(this.getContext(), accountsShow);
         binding = null;
+        super.onDestroyView();
     }
 
 }
