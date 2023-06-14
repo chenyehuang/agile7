@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="75dp">
+
+        <TextView
+            android:id="@+id/time_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="时间"
+            android:textSize="20sp"></TextView>
+
+
+        <TextView
+            android:id="@+id/income_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="44dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="-3dp"
+            android:layout_toEndOf="@+id/time_textView"
+            android:text="总收入"
+            android:textSize="20sp"></TextView>
+
+        <TextView
+            android:id="@+id/expanditure_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="191dp"
+            android:text="总支出"
+            android:textSize="20sp"></TextView>
+
+        <TextView
+            android:id="@+id/netincome_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="49dp"
+            android:layout_marginLeft="310dp"
+            android:layout_toEndOf="@+id/expanditure_textview"
+            android:text="净收入"
+            android:textSize="20sp"></TextView>
+
+        <TextView
+            android:id="@+id/income_changetext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/income_textview"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="9dp"
+            android:layout_toEndOf="@+id/time_textView"
+            android:text="1000"
+            android:textSize="20sp"></TextView>
+
+        <TextView
+            android:id="@+id/expanditure_changetext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/expanditure_textview"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/income_textview"
+            android:text="1000"
+            android:textSize="20sp"></TextView>
+
+        <TextView
+            android:id="@+id/netincome_changetext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/netincome_textview"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/expanditure_textview"
+            android:text="1000"
+            android:textSize="20sp"></TextView>
+
+    </RelativeLayout>
+
+
+</LinearLayout>
