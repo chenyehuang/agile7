@@ -44,7 +44,7 @@ import cn.edu.jnu.agile7.ui.dashboard.Bill;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class Bill_addTest {
+public class MainTest2 {
     ArrayList<Bill> initialData;
     DataServer dataServer;
     Context context;
