@@ -56,8 +56,9 @@ public class DeleteAcccountTest {
 
     @Before
     public void setUp() throws Exception {
-        dataSaverBackup=new AccountServer();
         Context targetContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        new AccountServer().ClearData(targetContext);
+        dataSaverBackup=new AccountServer();
         accountItemsBackup=dataSaverBackup.Load(targetContext);
         if (accountItemsBackup.size() == 0){
             accountItemsBackup.add(new Account("321", 654));
@@ -68,6 +69,7 @@ public class DeleteAcccountTest {
     @After
     public void tearDown() throws Exception {
         Context targetContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        new AccountServer().ClearData(targetContext);
         dataSaverBackup.Save(targetContext,accountItemsBackup);
     }
 

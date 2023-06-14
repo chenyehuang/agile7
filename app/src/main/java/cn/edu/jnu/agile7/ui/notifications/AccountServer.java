@@ -46,4 +46,12 @@ public class AccountServer {
         }
         return data;
     }
+
+    public void ClearData(Context context) {
+        try {
+            context.deleteFile("account.dat");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -15,6 +15,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 
+import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -23,6 +24,7 @@ import androidx.test.espresso.ViewInteraction;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -33,8 +35,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import cn.edu.jnu.agile7.ui.bill.DataServer;
 import cn.edu.jnu.agile7.ui.notifications.Account;
-
+import cn.edu.jnu.agile7.ui.notifications.AccountServer;
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class AddAccountTest {
@@ -47,11 +50,15 @@ public class AddAccountTest {
 
     @Before
     public void setUp(){
-        account = new Account("123", 456);
+        Context targetContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        new AccountServer().ClearData(targetContext);
+        account = new Account("222", 333);
     }
 
     @After
     public void teardown(){
+        Context targetContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        new AccountServer().ClearData(targetContext);
         account = null;
     }
 
@@ -86,7 +93,7 @@ public class AddAccountTest {
                                         0),
                                 3),
                         isDisplayed()));
-        appCompatEditText.perform(replaceText("123"), closeSoftKeyboard());
+        appCompatEditText.perform(replaceText("222"), closeSoftKeyboard());
 
         ViewInteraction appCompatEditText2 = onView(
                 allOf(withId(R.id.account_money),
@@ -96,7 +103,7 @@ public class AddAccountTest {
                                         0),
                                 0),
                         isDisplayed()));
-        appCompatEditText2.perform(replaceText("456"), closeSoftKeyboard());
+        appCompatEditText2.perform(replaceText("333"), closeSoftKeyboard());
 
         ViewInteraction materialButton2 = onView(
                 allOf(withId(R.id.button_confirm_add_account), withText("保存"),
