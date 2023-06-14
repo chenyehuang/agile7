@@ -42,7 +42,7 @@ public class EditTest {
     @Test
     public void editTest() {
         ViewInteraction materialButton = onView(
-                allOf(withId(R.id.button_edit), withText("�༭"),
+                allOf(withId(R.id.button_edit), withText("编辑"),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.LinearLayout")),
@@ -102,7 +102,7 @@ public class EditTest {
         appCompatEditText3.perform(replaceText("test"), closeSoftKeyboard());
 
         ViewInteraction materialButton2 = onView(
-                allOf(withId(R.id.income_button), withText("��һ��"),
+                allOf(withId(R.id.income_button), withText("记一笔"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.fragment_i),
