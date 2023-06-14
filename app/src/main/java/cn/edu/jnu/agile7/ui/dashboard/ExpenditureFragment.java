@@ -160,10 +160,6 @@ public class ExpenditureFragment extends Fragment {
 
         String[] options = {"账户1", "账户2", "账户3"};
         ArrayList<String> account_List = new ArrayList<>(Arrays.asList(options));
-        //增加
-        //account_List.add("新的账户");
-        //删除
-        //account_List.remove("新的账户");
 
         ArrayAdapter adapter = new ArrayAdapter<>(this.getActivity(), R.layout.spinner_item, account_List);
 
@@ -235,10 +231,17 @@ public class ExpenditureFragment extends Fragment {
         else if(clickedComponentFlag[0]==4){
             category = "其他";
         }
+        if (!amount_money.getText().toString().isEmpty()) {
+            money_number = Integer.parseInt(amount_money.getText().toString());
+        }
+
+        title_string = Title.getText().toString();
+        remake_string = Remake.getText().toString();
         // 获取选定的日期
         selectedYear = npYear.getValue();
         selectedMonth = npMonth.getValue();
         selectedDay = npDay.getValue();
+
         button = rootView.findViewById(R.id.expend_button);
         BillAddAndEdit();
 
@@ -250,8 +253,8 @@ public class ExpenditureFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //点击时操作
-                int position = getArguments().getInt("myArg");
-                Log.i("add and edit", String.valueOf(position));
+                int position = DashboardFragment.argument_position;
+                Log.i("add and edit", String.valueOf(position) + "received");
                 if (position == -1) {
                     accountArrayList =dataServer.Load(ExpenditureFragment.this.getContext());
                     account_expend = new Bill("支出", category, (-1.0)*money_number, select_account, selectedYear, selectedMonth, selectedDay, title_string, remake_string);
@@ -260,9 +263,6 @@ public class ExpenditureFragment extends Fragment {
                 }
                 else {
                     editData(position);
-                    Bundle args = new Bundle();
-                    args.putInt("myArg", -1);
-                    setArguments(args);
                     NavController navController = NavHostFragment.findNavController(ExpenditureFragment.this);//页面跳转
                     navController.popBackStack();
                 }
@@ -274,6 +274,7 @@ public class ExpenditureFragment extends Fragment {
         accountArrayList = dataServer.Load(ExpenditureFragment.this.getContext());
         account_expend = new Bill("支出", category, (-1.0)*money_number, select_account, selectedYear, selectedMonth, selectedDay, title_string, remake_string);
         accountArrayList.set(position, account_expend);
+        Log.i("add and edit", money_number + " money");
         dataServer.Save(ExpenditureFragment.this.getContext(), accountArrayList);
     }
 }

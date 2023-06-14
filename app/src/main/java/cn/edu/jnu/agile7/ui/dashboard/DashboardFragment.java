@@ -3,6 +3,7 @@ package cn.edu.jnu.agile7.ui.dashboard;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ import cn.edu.jnu.agile7.databinding.FragmentDashboardBinding;
 public class DashboardFragment extends Fragment {
 
     private FragmentDashboardBinding binding;
+    public static int argument_position;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -40,7 +42,6 @@ public class DashboardFragment extends Fragment {
 
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
 //        View rootView = inflater.inflate(R.layout.fragment_dashboard, container, false);
         ViewPager2 viewPager2Main = root.findViewById(R.id.viewpager2_main);
         viewPager2Main.setAdapter(new PageViewFragmentAdapter(getChildFragmentManager(), getLifecycle()));
@@ -60,6 +61,13 @@ public class DashboardFragment extends Fragment {
             }
         });
         tabLayoutMediator.attach();
+        Bundle args = getArguments();
+        if (args == null) {
+            Log.i("add and edit", "wrong");
+            argument_position = -1;
+        }
+        else
+            argument_position = args.getInt("myArg");
         return root;
     }
 
@@ -98,5 +106,9 @@ public class DashboardFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+        Bundle args = new Bundle();
+        args.putInt("myArg", -1);
+        setArguments(args);
+        Log.i("add and edit", "destroy");
     }
 }

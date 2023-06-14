@@ -73,8 +73,9 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.MyHolder>{
             public void onClick(View v) {
                 Bundle args = new Bundle();
                 args.putInt("myArg", position);
+                Log.i("add and edit", position +" in adapter");
                 NavController navController = Navigation.findNavController(rootView);
-                navController.navigate(R.id.navigation_dashboard);
+                navController.navigate(R.id.navigation_dashboard, args);
             }
         });
         //删除数据

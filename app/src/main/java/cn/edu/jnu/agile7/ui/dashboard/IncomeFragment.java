@@ -267,8 +267,8 @@ public class IncomeFragment extends Fragment {
             public void onClick(View v) {
 
                 //开始保存数据
-                int position = getArguments().getInt("myArg");
-                Log.i("add and edit", String.valueOf(position));
+                int position = DashboardFragment.argument_position;
+                Log.i("add and edit", String.valueOf(position) + "received");
                 if (position == -1) {
                     accountArrayList = dataServer.Load(IncomeFragment.this.getContext());
                     account_income = new Bill("收入", category, money_number, select_account, selectedYear, selectedMonth, selectedDay, title_string, remake_string);
@@ -278,9 +278,6 @@ public class IncomeFragment extends Fragment {
                 }
                 else {
                     editData2(position);
-                    Bundle args = new Bundle();
-                    args.putInt("myArg", -1);
-                    setArguments(args);
                     NavController navController = NavHostFragment.findNavController(IncomeFragment.this);
                     navController.popBackStack();
                 }
@@ -293,6 +290,7 @@ public class IncomeFragment extends Fragment {
         accountArrayList = dataServer.Load(IncomeFragment.this.getContext());
         account_income = new Bill("收入", category, money_number, select_account, selectedYear, selectedMonth, selectedDay, title_string, remake_string);
         accountArrayList.set(position, account_income);
+        Log.i("add and edit", money_number + " money");
         dataServer.Save(IncomeFragment.this.getContext(), accountArrayList);
     }
 }
