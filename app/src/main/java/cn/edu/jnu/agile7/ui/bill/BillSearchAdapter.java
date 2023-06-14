@@ -52,17 +52,21 @@ public class BillSearchAdapter extends RecyclerView.Adapter<BillSearchAdapter.My
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UUID id=billArrayList.get(position).getId();
-                removedata_search(position);
-                //得到item位置，在主页面那里也删除
-                for(int i=0;i<billAdapter.getList().size();i++){
-                    if (id==billAdapter.getList().get(i).getId()){
-                        billAdapter.removeData(i);
-                        // 删除后更新文件数据，即保存数据a
-                        new DataServer().Save(context,billAdapter.getList());
-                        break;
+                if (position >= 0 && position < billArrayList.size()) {
+                    UUID id=billArrayList.get(position).getId();
+                    removedata_search(position);
+                    for(int i=0;i<billAdapter.getList().size();i++){
+                        if (id==billAdapter.getList().get(i).getId()){
+                            billAdapter.removeData(i);
+                            //                删除后更新文件数据，即保存数据a
+                            new DataServer().Save(context,billAdapter.getList());
+                            break;
+                        }
                     }
                 }
+//                UUID id=billArrayList.get(position).getId();
+//                removedata_search(position);
+//                得到item位置，在主页面那里也删除
             }
         });
     }

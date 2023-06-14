@@ -1,9 +1,12 @@
 package cn.edu.jnu.agile7.ui.bill;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.widget.SearchView;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -43,7 +46,7 @@ public class BillFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         //从文件中加载数据
         accountArrayList = dataServer.Load(BillFragment.this.getContext());
-        Log.i("billList", accountArrayList.size() +"onCreate1");//还是为0，data.dat为空？？？？？
+        Log.i("billList", accountArrayList.size() +"onCreate1");
 
         //如果从文件中加载的数据长度为0，自动先加入三条数据
         if(accountArrayList.size()==0) {
@@ -65,7 +68,7 @@ public class BillFragment extends Fragment {
         recycleViewbill=rootView.findViewById(R.id.recycle_view_account);
         //下面一行如果用模板自带的 View root = binding.getRoot()初始化会报空指针错误，所以注释掉了
         recycleViewbill.setLayoutManager(new LinearLayoutManager(BillFragment.this.getContext(),LinearLayoutManager.VERTICAL,false));//true和false有区别,第三个参数表示是否反转,
-        billadapter = new BillAdapter(accountArrayList, this.getActivity());
+        billadapter = new BillAdapter(accountArrayList, this.getActivity(), rootView);
         recycleViewbill.setAdapter(billadapter);
         //billadapter.notifyDataSetChanged();
         Log.i("billList", accountArrayList.size() +"onCreate3");
@@ -113,36 +116,37 @@ public class BillFragment extends Fragment {
     }
 
     //搜索的过滤器
-    private ArrayList<Bill>filter(ArrayList<Bill>strings, String text){
+    private ArrayList<Bill>filter(ArrayList<Bill>strings,String text){
+//        存储符合要求的搜索账目结果的filterbills列表
         filterbills = new ArrayList<>();
-        for (Bill bill: billadapter.getList()){
-            if (bill.getTitle().contains(text)) {
+        for (Bill bill: strings){
+            if (bill != null && bill.getTitle() != null && bill.getTitle().contains(text)) {
                 filterbills.add(bill);
             }
-            else if (bill.getRemake().contains(text)) {
+            else if (bill != null && bill.getRemake() != null&&bill.getRemake().contains(text)) {
                 filterbills.add(bill);
             }
 //            账户account
-            else if (bill.getAccount().contains(text)) {
+            else if (bill!=null&&bill.getAccount()!=null&&bill.getAccount().contains(text)) {
                 filterbills.add(bill);
             }
-            else if (bill.getCategory().contains(text)) {
+            else if (bill!=null&&bill.getCategory()!=null&&bill.getCategory().contains(text)) {
                 filterbills.add(bill);
             }
-            else if (bill.getType().contains(text)) {
+            else if (bill!=null&&bill.getType()!=null&&bill.getType().contains(text)) {
                 filterbills.add(bill);
             }
 //            TODO:下面是搜索数字，但是还没对非数字进行处理，所以输入非数字搜索会报错
-            else if (bill.getMoney()==(Double.parseDouble(text))) {
+            else if (bill!=null&&bill.getMoney()==(Double.parseDouble(text))) {
                 filterbills.add(bill);
             }
-            else if (bill.getYear()==Integer.parseInt(text)){
+            else if (bill!=null&&bill.getYear()==Integer.parseInt(text)){
                 filterbills.add(bill);
             }
-            else if (bill.getMonth()==Integer.parseInt(text)){
+            else if (bill!=null&&bill.getMonth()==Integer.parseInt(text)){
                 filterbills.add(bill);
             }
-            else if (bill.getDay()==Integer.parseInt(text)){
+            else if (bill!=null&&bill.getDay()==Integer.parseInt(text)){
                 filterbills.add(bill);
             }
         }

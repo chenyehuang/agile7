@@ -147,7 +147,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 statisticsArrayList.clear();//每一次查询之前先清空
                 //从文件中加载数据
-                ArrayList<Account>accountArrayList = new DataServer().Load(HomeFragment.this.getContext());
+                ArrayList<Bill>accountArrayList = new DataServer().Load(HomeFragment.this.getContext());
                 query(accountArrayList);
                 statisticsRecycleview.setAdapter(homeadapter);
                 homeadapter.setStatisticsArrayList(statisticsArrayList);

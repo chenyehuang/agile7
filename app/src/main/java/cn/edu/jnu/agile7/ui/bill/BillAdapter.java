@@ -1,14 +1,24 @@
 package cn.edu.jnu.agile7.ui.bill;
 
+import static androidx.activity.result.ActivityResultCallerKt.registerForActivityResult;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -22,8 +32,10 @@ import cn.edu.jnu.agile7.ui.dashboard.Bill;
 public class BillAdapter extends RecyclerView.Adapter<BillAdapter.MyHolder>{
     //设置context，让其他界面调用
     private Context context;
+    private View rootView;
     private ArrayList<Bill> billArrayList;
     private ImageButton imageButton;
+    private Button button_edit;
 
     DataServer dataServer = new DataServer();
     //获取列表
@@ -32,9 +44,11 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.MyHolder>{
     }
     public void setList(ArrayList<Bill>billArrayList){this.billArrayList=billArrayList;}
 
-    public BillAdapter(ArrayList<Bill> billArrayList, Context context) {//待会在activity的oncreate中需要用到
+
+    public BillAdapter(ArrayList<Bill> billArrayList, Context context, View rootView) {//待会在activity的oncreate中需要用到
         this.billArrayList=billArrayList;//从主页传过来的
         this.context = context;//因为和主页分离了，所以需要获取主页上下文
+        this.rootView = rootView;
     }
 
     @NonNull
@@ -53,6 +67,16 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.MyHolder>{
         holder.gettextviewDay().setText(String.valueOf(billArrayList.get(position).getDay()));
         holder.gettextviewAmount().setText(String.valueOf(billArrayList.get(position).getMoney()));
 
+        //编辑数据
+        button_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle args = new Bundle();
+                args.putInt("myArg", position);
+                NavController navController = Navigation.findNavController(rootView);
+                navController.navigate(R.id.navigation_dashboard);
+            }
+        });
         //删除数据
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +119,8 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.MyHolder>{
             amount=itemView.findViewById(R.id.text_account_amount);
 //            删除按钮
             imageButton=itemView.findViewById(R.id.imagebutton_delete);
+//            编辑按钮
+            button_edit = itemView.findViewById(R.id.button_edit);
         }
         public TextView gettextviewBillName() {return billName;}
         public TextView gettextviewYear() {return year;}

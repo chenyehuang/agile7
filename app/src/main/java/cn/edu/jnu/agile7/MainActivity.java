@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         Objects.requireNonNull(this.getSupportActionBar()).hide();
 
 
-// 获取底部导航视图
+        // 获取底部导航视图
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.

@@ -60,5 +60,15 @@
             android:scaleType="centerCrop"
             android:src="@drawable/delete_button"></ImageButton>
 
+        <Button
+            android:id="@+id/button_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="33dp"
+            android:layout_marginEnd="1dp"
+            android:layout_toStartOf="@+id/imagebutton_delete"
+            android:text="编辑" />
+
     </RelativeLayout>
 </LinearLayout>

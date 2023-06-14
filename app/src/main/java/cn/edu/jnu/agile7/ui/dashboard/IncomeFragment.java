@@ -4,13 +4,9 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,15 +19,12 @@ import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 
-import org.junit.After;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 
 import cn.edu.jnu.agile7.R;
-import cn.edu.jnu.agile7.ui.bill.BillFragment;
+import cn.edu.jnu.agile7.ui.bill.DataServer;
 
 public class IncomeFragment extends Fragment {
     public final int[] clickedComponentFlag = new int[1];
@@ -60,6 +53,9 @@ public class IncomeFragment extends Fragment {
     private ArrayAdapter adapter;
     private ArrayList<String> account_List;
 
+    //        用于存放文件load进来的数据
+    ArrayList<Bill>accountArrayList=new ArrayList<>();
+    DataServer dataServer=new DataServer();
 
     public IncomeFragment() {
         // Required empty public constructor
@@ -172,10 +168,10 @@ public class IncomeFragment extends Fragment {
 
         String[] options = {"账户1", "账户2", "账户3"};
         account_List = new ArrayList<>(Arrays.asList(options));
-//        //增加
-//         account_List.add("新的账户");
-//        //删除
-//        account_List.remove("新的账户");
+        //增加
+        //account_List.add("新的账户");
+        //删除
+        //account_List.remove("新的账户");
 
         adapter = new ArrayAdapter<>(this.getActivity(), R.layout.spinner_item, account_List);
 
@@ -221,71 +217,82 @@ public class IncomeFragment extends Fragment {
         Title = rootView.findViewById(R.id.income_title);
         Remake = (EditText) rootView.findViewById(R.id.income_remark);
 
+        if (clickedComponentFlag[0] == 1){
+            category = "工资";
+        }
+        else if(clickedComponentFlag[0]==2){
+            category = "理财";
+        }
+        else if(clickedComponentFlag[0]==3){
+            category = "兼职";
+        }
+        else if(clickedComponentFlag[0]==4){
+            category = "副业";
+        }
+
+        if (!amount_money.getText().toString().isEmpty()) {
+            money_number = Integer.parseInt(amount_money.getText().toString());
+        }
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                        String selectedOption = account_List.get(position);
+                select_account = account_List.get(position);
+//                Log.i(select_account, "select");
+                // 在这里处理选择的选项
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // 当没有选项被选择时的处理
+            }
+        });
+
+        title_string = Title.getText().toString();
+        remake_string = Remake.getText().toString();
+        // 获取选定的日期
+        selectedYear = npYear.getValue();
+        selectedMonth = npMonth.getValue();
+        selectedDay = npDay.getValue();
+
         button = rootView.findViewById(R.id.income_button);
-        BillAdd();
+        BillAddAndEdit();
         return rootView;
     }
 
-    public void BillAdd(){
+    public void BillAddAndEdit(){
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (clickedComponentFlag[0] == 1){
-                    category = "工资";
+
+                //开始保存数据
+                int position = getArguments().getInt("myArg");
+                Log.i("add and edit", String.valueOf(position));
+                if (position == -1) {
+                    accountArrayList = dataServer.Load(IncomeFragment.this.getContext());
+                    account_income = new Bill("收入", category, money_number, select_account, selectedYear, selectedMonth, selectedDay, title_string, remake_string);
+                    accountArrayList.add(account_income);
+                    Log.e("hh", String.valueOf(accountArrayList.size()) + "button");
+                    dataServer.Save(IncomeFragment.this.getContext(), accountArrayList);
                 }
-                else if(clickedComponentFlag[0]==2){
-                    category = "理财";
+                else {
+                    editData2(position);
+                    Bundle args = new Bundle();
+                    args.putInt("myArg", -1);
+                    setArguments(args);
+                    NavController navController = NavHostFragment.findNavController(IncomeFragment.this);
+                    navController.popBackStack();
                 }
-                else if(clickedComponentFlag[0]==3){
-                    category = "兼职";
-                }
-                else if(clickedComponentFlag[0]==4){
-                    category = "副业";
-                }
-
-                if (!amount_money.getText().toString().isEmpty()) {
-                    money_number = Integer.parseInt(amount_money.getText().toString());
-                }
-
-                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                        String selectedOption = account_List.get(position);
-                        select_account = account_List.get(position);
-//                Log.i(select_account, "select");
-                        // 在这里处理选择的选项
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                        // 当没有选项被选择时的处理
-                    }
-                });
-
-
-                title_string = Title.getText().toString();
-                remake_string = Remake.getText().toString();
-                // 获取选定的日期
-                selectedYear = npYear.getValue();
-                selectedMonth = npMonth.getValue();
-                selectedDay = npDay.getValue();
-                account_income = new Bill("收入", category, money_number, select_account, selectedYear, selectedMonth, selectedDay, title_string, remake_string);
-
-                // 创建 Bundle 对象
-                Bundle bundle = new Bundle();
-
-                // 将账目实例作为参数传递给 Bundle
-                bundle.putSerializable("bill", account_income);
-
-                // 创建 BillFragment 实例
-                BillFragment billFragment = new BillFragment();
-                billFragment.setArguments(bundle);
-                Log.i(String.valueOf(bundle), "bundle_11");
-                // 使用导航组件进行页面跳转并传递 Bundle
-                Navigation.findNavController(rootView).navigate(R.id.navigation_bill, bundle);
 
             }
         });
     }
 
+    private void editData2(int position) {
+        accountArrayList = dataServer.Load(IncomeFragment.this.getContext());
+        account_income = new Bill("收入", category, money_number, select_account, selectedYear, selectedMonth, selectedDay, title_string, remake_string);
+        accountArrayList.set(position, account_income);
+        dataServer.Save(IncomeFragment.this.getContext(), accountArrayList);
+    }
 }

@@ -3,6 +3,8 @@ package cn.edu.jnu.agile7.ui.dashboard;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -23,6 +25,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 
 import cn.edu.jnu.agile7.R;
+import cn.edu.jnu.agile7.ui.bill.DataServer;
 
 public class ExpenditureFragment extends Fragment {
     final int[] clickedComponentFlag = new int[1];
@@ -44,6 +47,9 @@ public class ExpenditureFragment extends Fragment {
     private Button button;
     private Bill account_expend;
 
+    //        用于存放文件load进来的数据
+    ArrayList<Bill>accountArrayList=new ArrayList<>();
+    DataServer dataServer=new DataServer();
 
     public ExpenditureFragment() {
         // Required empty public constructor
@@ -229,16 +235,45 @@ public class ExpenditureFragment extends Fragment {
         else if(clickedComponentFlag[0]==4){
             category = "其他";
         }
-
+        // 获取选定的日期
+        selectedYear = npYear.getValue();
+        selectedMonth = npMonth.getValue();
+        selectedDay = npDay.getValue();
         button = rootView.findViewById(R.id.expend_button);
+        BillAddAndEdit();
+
+        return rootView;
+    }
+
+    private void BillAddAndEdit() {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //点击时操作
+                int position = getArguments().getInt("myArg");
+                Log.i("add and edit", String.valueOf(position));
+                if (position == -1) {
+                    accountArrayList =dataServer.Load(ExpenditureFragment.this.getContext());
+                    account_expend = new Bill("支出", category, (-1.0)*money_number, select_account, selectedYear, selectedMonth, selectedDay, title_string, remake_string);
+                    accountArrayList.add(account_expend);
+                    dataServer.Save(ExpenditureFragment.this.getContext(),accountArrayList);
+                }
+                else {
+                    editData(position);
+                    Bundle args = new Bundle();
+                    args.putInt("myArg", -1);
+                    setArguments(args);
+                    NavController navController = NavHostFragment.findNavController(ExpenditureFragment.this);//页面跳转
+                    navController.popBackStack();
+                }
             }
         });
+    }
 
-
-        return rootView;
+    private void editData(int position) {
+        accountArrayList = dataServer.Load(ExpenditureFragment.this.getContext());
+        account_expend = new Bill("支出", category, (-1.0)*money_number, select_account, selectedYear, selectedMonth, selectedDay, title_string, remake_string);
+        accountArrayList.set(position, account_expend);
+        dataServer.Save(ExpenditureFragment.this.getContext(), accountArrayList);
     }
 }
