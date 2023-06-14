@@ -33,14 +33,14 @@ import org.junit.runner.RunWith;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class EditandDeleteTest {
+public class EditTest {
 
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(MainActivity.class);
 
     @Test
-    public void editandDeleteTest() {
+    public void editTest() {
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.button_edit), withText("�༭"),
                         childAtPosition(
@@ -52,21 +52,21 @@ public class EditandDeleteTest {
         materialButton.perform(click());
 
         ViewInteraction appCompatImageView = onView(
-                allOf(withId(R.id.part_time_background),
+                allOf(withId(R.id.manage_background),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
-                                        2),
+                                        1),
                                 0),
                         isDisplayed()));
         appCompatImageView.perform(click());
 
         ViewInteraction appCompatImageView2 = onView(
-                allOf(withId(R.id.part_time_background),
+                allOf(withId(R.id.manage_background),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
-                                        2),
+                                        1),
                                 0),
                         isDisplayed()));
         appCompatImageView2.perform(click());
@@ -79,7 +79,7 @@ public class EditandDeleteTest {
                                         1),
                                 1),
                         isDisplayed()));
-        appCompatEditText.perform(replaceText("123"), closeSoftKeyboard());
+        appCompatEditText.perform(replaceText("22"), closeSoftKeyboard());
 
         ViewInteraction appCompatEditText2 = onView(
                 allOf(withId(R.id.income_title),
@@ -99,23 +99,23 @@ public class EditandDeleteTest {
                                         3),
                                 3),
                         isDisplayed()));
-        appCompatEditText3.perform(replaceText("wcz"), closeSoftKeyboard());
+        appCompatEditText3.perform(replaceText("test"), closeSoftKeyboard());
 
         ViewInteraction materialButton2 = onView(
                 allOf(withId(R.id.income_button), withText("��һ��"),
                         childAtPosition(
                                 childAtPosition(
-                                        withClassName(is("android.widget.FrameLayout")),
+                                        withId(R.id.fragment_i),
                                         0),
                                 4),
                         isDisplayed()));
         materialButton2.perform(click());
 
         ViewInteraction textView = onView(
-                allOf(withId(R.id.text_account_amount), withText("-100.0"),
+                allOf(withId(R.id.text_account_amount), withText("22.0"),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class))),
                         isDisplayed()));
-        textView.check(matches(withText("-123")));
+        textView.check(matches(withText("22.0")));
     }
 
     private static Matcher<View> childAtPosition(

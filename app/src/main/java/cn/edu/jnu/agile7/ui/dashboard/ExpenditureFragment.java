@@ -50,6 +50,11 @@ public class ExpenditureFragment extends Fragment {
     //        用于存放文件load进来的数据
     ArrayList<Bill>accountArrayList=new ArrayList<>();
     DataServer dataServer=new DataServer();
+    private Spinner spinner;
+    public ArrayList<String> account_list;
+    private NumberPicker npYear;
+    private NumberPicker npMonth;
+    private NumberPicker npDay;
 
     public ExpenditureFragment() {
         // Required empty public constructor
@@ -159,26 +164,13 @@ public class ExpenditureFragment extends Fragment {
 
 
         String[] options = {"账户1", "账户2", "账户3"};
-        ArrayList<String> account_List = new ArrayList<>(Arrays.asList(options));
+        account_list = new ArrayList<>(Arrays.asList(options));
 
-        ArrayAdapter adapter = new ArrayAdapter<>(this.getActivity(), R.layout.spinner_item, account_List);
+        ArrayAdapter adapter = new ArrayAdapter<>(this.getActivity(), R.layout.spinner_item, account_list);
 
-        Spinner spinner = rootView.findViewById(R.id.expend_spinner);
+        spinner = rootView.findViewById(R.id.expend_spinner);
         spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedOption = account_List.get(position);
-                select_account = account_List.get(position);
-//                Log.i(select_account, "select");
-                // 在这里处理选择的选项
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // 当没有选项被选择时的处理
-            }
-        });
 
         // 获取当前日期
         Calendar calendar = Calendar.getInstance();
@@ -187,9 +179,9 @@ public class ExpenditureFragment extends Fragment {
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
 
         // 初始化NumberPicker
-        NumberPicker npYear = rootView.findViewById(R.id.expend_np_year);
-        NumberPicker npMonth = rootView.findViewById(R.id.expend_np_month);
-        NumberPicker npDay = rootView.findViewById(R.id.expend_np_day);
+        npYear = rootView.findViewById(R.id.expend_np_year);
+        npMonth = rootView.findViewById(R.id.expend_np_month);
+        npDay = rootView.findViewById(R.id.expend_np_day);
 
         // 设置NumberPicker的范围
         npYear.setMinValue(year - 100);
@@ -219,29 +211,6 @@ public class ExpenditureFragment extends Fragment {
         Title = (EditText) rootView.findViewById(R.id.expend_title);
         Remake = (EditText) rootView.findViewById(R.id.expend_remark);
 
-        if (clickedComponentFlag[0]==1){
-            category = "餐饮";
-        }
-        else if(clickedComponentFlag[0]==2){
-            category = "购物";
-        }
-        else if(clickedComponentFlag[0]==3){
-            category = "公交";
-        }
-        else if(clickedComponentFlag[0]==4){
-            category = "其他";
-        }
-        if (!amount_money.getText().toString().isEmpty()) {
-            money_number = Integer.parseInt(amount_money.getText().toString());
-        }
-
-        title_string = Title.getText().toString();
-        remake_string = Remake.getText().toString();
-        // 获取选定的日期
-        selectedYear = npYear.getValue();
-        selectedMonth = npMonth.getValue();
-        selectedDay = npDay.getValue();
-
         button = rootView.findViewById(R.id.expend_button);
         BillAddAndEdit();
 
@@ -253,6 +222,43 @@ public class ExpenditureFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //点击时操作
+                if (clickedComponentFlag[0]==1){
+                    category = "餐饮";
+                }
+                else if(clickedComponentFlag[0]==2){
+                    category = "购物";
+                }
+                else if(clickedComponentFlag[0]==3){
+                    category = "公交";
+                }
+                else if(clickedComponentFlag[0]==4){
+                    category = "其他";
+                }
+                if (!amount_money.getText().toString().isEmpty()) {
+                    money_number = Integer.parseInt(amount_money.getText().toString());
+                }
+
+                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        String selectedOption = account_list.get(position);
+                        select_account = account_list.get(position);
+//                Log.i(select_account, "select");
+                        // 在这里处理选择的选项
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        // 当没有选项被选择时的处理
+                    }
+                });
+                title_string = Title.getText().toString();
+                remake_string = Remake.getText().toString();
+                // 获取选定的日期
+                selectedYear = npYear.getValue();
+                selectedMonth = npMonth.getValue();
+                selectedDay = npDay.getValue();
+
                 int position = DashboardFragment.argument_position;
                 Log.i("add and edit", String.valueOf(position) + "received");
                 if (position == -1) {

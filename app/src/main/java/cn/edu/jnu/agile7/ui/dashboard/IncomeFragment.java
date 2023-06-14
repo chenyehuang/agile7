@@ -165,13 +165,8 @@ public class IncomeFragment extends Fragment {
         amount_money = rootView.findViewById(R.id.income_money);
 
 
-
         String[] options = {"账户1", "账户2", "账户3"};
         account_List = new ArrayList<>(Arrays.asList(options));
-        //增加
-        //account_List.add("新的账户");
-        //删除
-        //account_List.remove("新的账户");
 
         adapter = new ArrayAdapter<>(this.getActivity(), R.layout.spinner_item, account_List);
 
@@ -217,44 +212,9 @@ public class IncomeFragment extends Fragment {
         Title = rootView.findViewById(R.id.income_title);
         Remake = (EditText) rootView.findViewById(R.id.income_remark);
 
-        if (clickedComponentFlag[0] == 1){
-            category = "工资";
-        }
-        else if(clickedComponentFlag[0]==2){
-            category = "理财";
-        }
-        else if(clickedComponentFlag[0]==3){
-            category = "兼职";
-        }
-        else if(clickedComponentFlag[0]==4){
-            category = "副业";
-        }
 
-        if (!amount_money.getText().toString().isEmpty()) {
-            money_number = Integer.parseInt(amount_money.getText().toString());
-        }
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                        String selectedOption = account_List.get(position);
-                select_account = account_List.get(position);
-//                Log.i(select_account, "select");
-                // 在这里处理选择的选项
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // 当没有选项被选择时的处理
-            }
-        });
-
-        title_string = Title.getText().toString();
-        remake_string = Remake.getText().toString();
-        // 获取选定的日期
-        selectedYear = npYear.getValue();
-        selectedMonth = npMonth.getValue();
-        selectedDay = npDay.getValue();
 
         button = rootView.findViewById(R.id.income_button);
         BillAddAndEdit();
@@ -265,6 +225,43 @@ public class IncomeFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (clickedComponentFlag[0] == 1){
+                    category = "工资";
+                }
+                else if(clickedComponentFlag[0]==2){
+                    category = "理财";
+                }
+                else if(clickedComponentFlag[0]==3){
+                    category = "兼职";
+                }
+                else if(clickedComponentFlag[0]==4){
+                    category = "副业";
+                }
+
+                if (!amount_money.getText().toString().isEmpty()) {
+                    money_number = Integer.parseInt(amount_money.getText().toString());
+                }
+
+                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                        String selectedOption = account_List.get(position);
+                        select_account = account_List.get(position);
+//                Log.i(select_account, "select");
+                        // 在这里处理选择的选项
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        // 当没有选项被选择时的处理
+                    }
+                });
+                title_string = Title.getText().toString();
+                remake_string = Remake.getText().toString();
+                // 获取选定的日期
+                selectedYear = npYear.getValue();
+                selectedMonth = npMonth.getValue();
+                selectedDay = npDay.getValue();
 
                 //开始保存数据
                 int position = DashboardFragment.argument_position;
