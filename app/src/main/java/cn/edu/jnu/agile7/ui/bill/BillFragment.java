@@ -11,6 +11,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,12 +23,14 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import cn.edu.jnu.agile7.MainActivity;
 import cn.edu.jnu.agile7.R;
 import cn.edu.jnu.agile7.ui.dashboard.Bill;
 
 public class BillFragment extends Fragment {
 
     private RecyclerView recycleViewbill;
+
     //主要用的adapter
     private BillAdapter billadapter;
 
@@ -37,8 +40,8 @@ public class BillFragment extends Fragment {
     //存储搜索数据的列表
     private ArrayList<Bill>filterbills;
     private SearchView searchView;
-    //用于搜索功能的适配器,会同步搜索内容更新列表
-    private BillSearchAdapter billSearchAdapter;//自定义的
+    //用于搜索功能的适配器,会同步搜索内容更新列表//自定义的
+    private BillSearchAdapter billSearchAdapter;
     private DataServer dataServer=new DataServer();
 
     @Override
@@ -59,8 +62,6 @@ public class BillFragment extends Fragment {
             new DataServer().Save(this.getContext(), accountArrayList);
         }
 
-        Log.i("billList", accountArrayList.size() +"onCreate2");
-
         View rootView = inflater.inflate(R.layout.fragment_bill, container, false);
 
         searchView = rootView.findViewById(R.id.account_search);
@@ -70,8 +71,9 @@ public class BillFragment extends Fragment {
         recycleViewbill.setLayoutManager(new LinearLayoutManager(BillFragment.this.getContext(),LinearLayoutManager.VERTICAL,false));//true和false有区别,第三个参数表示是否反转,
         billadapter = new BillAdapter(accountArrayList, this.getActivity(), rootView);
         recycleViewbill.setAdapter(billadapter);
-        //billadapter.notifyDataSetChanged();
+        //billAdapter.notifyDataSetChanged();
         Log.i("billList", accountArrayList.size() +"onCreate3");
+        Log.i("add and edit", "BillFragment的context" + getContext());
         return rootView;
     }
 

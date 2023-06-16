@@ -18,7 +18,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.espresso.ViewInteraction;
+import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
@@ -27,13 +29,21 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 import org.hamcrest.core.IsInstanceOf;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
+
+import cn.edu.jnu.agile7.ui.bill.BillAdapter;
+import cn.edu.jnu.agile7.ui.dashboard.Bill;
+
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class EditTest {
+
+    ArrayList<Bill> accountArrayList = new ArrayList<>();
 
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
@@ -41,15 +51,21 @@ public class EditTest {
 
     @Test
     public void editTest() {
-        ViewInteraction materialButton = onView(
-                allOf(withId(R.id.button_edit), withText("编辑"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.LinearLayout")),
-                                        0),
-                                6),
-                        isDisplayed()));
-        materialButton.perform(click());
+//        ViewInteraction appCompatImageButton = onView(
+//                allOf(withId(R.id.button_edit),
+//                        childAtPosition(
+//                                childAtPosition(
+//                                        withClassName(is("android.widget.LinearLayout")),
+//                                        0),
+//                                6),
+//                        isDisplayed()));
+//        appCompatImageButton.perform(click());
+        // 获取 RecyclerView 视图
+        onView(withId(R.id.recycle_view_account))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(
+                        0, RecyclerViewActions.actionOnItemAtPosition(
+                                R.id.button_edit, click()
+                        )));
 
         ViewInteraction appCompatImageView = onView(
                 allOf(withId(R.id.manage_background),
@@ -79,7 +95,7 @@ public class EditTest {
                                         1),
                                 1),
                         isDisplayed()));
-        appCompatEditText.perform(replaceText("22"), closeSoftKeyboard());
+        appCompatEditText.perform(replaceText("123"), closeSoftKeyboard());
 
         ViewInteraction appCompatEditText2 = onView(
                 allOf(withId(R.id.income_title),
@@ -101,21 +117,21 @@ public class EditTest {
                         isDisplayed()));
         appCompatEditText3.perform(replaceText("test"), closeSoftKeyboard());
 
-        ViewInteraction materialButton2 = onView(
-                allOf(withId(R.id.income_button), withText("记一笔"),
+        ViewInteraction materialButton = onView(
+                allOf(withId(R.id.income_button), withText("��һ��"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.fragment_i),
                                         0),
                                 4),
                         isDisplayed()));
-        materialButton2.perform(click());
+        materialButton.perform(click());
 
         ViewInteraction textView = onView(
-                allOf(withId(R.id.text_account_amount), withText("22.0"),
+                allOf(withId(R.id.text_account_amount), withText("123.0"),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class))),
                         isDisplayed()));
-        textView.check(matches(withText("22.0")));
+        textView.check(matches(withText("123.0")));
     }
 
     private static Matcher<View> childAtPosition(

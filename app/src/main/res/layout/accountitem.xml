@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:text="美团外卖"
-            android:textSize="30sp"></TextView>
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/text_account_year"
@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/text_account_name"
             android:text="xxy"
-            android:textSize="25sp"></TextView>
+            android:textSize="25sp" />
 
         <TextView
             android:id="@+id/text_account_month"
@@ -31,7 +31,7 @@
             android:layout_below="@id/text_account_name"
             android:layout_toRightOf="@id/text_account_year"
             android:text="xxm"
-            android:textSize="25sp"></TextView>
+            android:textSize="25sp" />
 
         <TextView
             android:id="@+id/text_account_day"
@@ -40,17 +40,17 @@
             android:layout_below="@id/text_account_name"
             android:layout_toRightOf="@id/text_account_month"
             android:text="xxm"
-            android:textSize="25sp"></TextView>
+            android:textSize="25sp" />
 
         <TextView
             android:id="@+id/text_account_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="100dp"
-            android:layout_marginEnd="45dp"
+            android:layout_marginEnd="110dp"
             android:layout_toStartOf="@+id/imagebutton_delete"
             android:text="500"
-            android:textSize="30sp"></TextView>
+            android:textSize="30sp" />
 
         <ImageButton
             android:id="@+id/imagebutton_delete"
@@ -58,17 +58,18 @@
             android:layout_height="79dp"
             android:layout_alignParentRight="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/delete_button"></ImageButton>
+            android:src="@drawable/delete_button" />
 
-        <Button
+        <ImageButton
             android:id="@+id/button_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="33dp"
-            android:layout_marginEnd="1dp"
+            android:layout_below="@+id/text_account_amount"
+            android:layout_marginTop="-15dp"
+            android:layout_marginEnd="7dp"
             android:layout_toStartOf="@+id/imagebutton_delete"
-            android:text="编辑" />
+            app:srcCompat="@android:drawable/ic_menu_edit" />
 
     </RelativeLayout>
+
 </LinearLayout>

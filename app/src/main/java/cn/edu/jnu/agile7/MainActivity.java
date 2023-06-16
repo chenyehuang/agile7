@@ -11,11 +11,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 
-;
 import java.util.Objects;
 
 import cn.edu.jnu.agile7.databinding.ActivityMainBinding;
@@ -25,7 +25,7 @@ import cn.edu.jnu.agile7.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-
+    public static NavController navController;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
         //去掉标题栏
         Objects.requireNonNull(this.getSupportActionBar()).hide();
 
-
         // 获取底部导航视图
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -48,10 +47,16 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         // 获取导航控制器，并将其与活动的导航宿主Fragment关联
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
+        Log.i("add and edit", "navController存在" + (navController != null));
 
         // 使用导航控制器设置ActionBar和顶部导航视图
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+
+        Log.i("context", String.valueOf(this));
+    }
+    public NavController getNavController() {
+        return navController;
     }
 }

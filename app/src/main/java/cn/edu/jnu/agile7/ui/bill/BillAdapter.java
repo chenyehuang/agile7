@@ -18,11 +18,13 @@ import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import cn.edu.jnu.agile7.MainActivity;
 import cn.edu.jnu.agile7.R;
 import cn.edu.jnu.agile7.ui.dashboard.Bill;
 
@@ -35,20 +37,27 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.MyHolder>{
     private View rootView;
     private ArrayList<Bill> billArrayList;
     private ImageButton imageButton;
-    private Button button_edit;
-
+    private ImageButton button_edit;
     DataServer dataServer = new DataServer();
+    NavController navController;
+
     //获取列表
     public ArrayList<Bill> getList(){
         return this.billArrayList;
     }
     public void setList(ArrayList<Bill>billArrayList){this.billArrayList=billArrayList;}
 
-
-    public BillAdapter(ArrayList<Bill> billArrayList, Context context, View rootView) {//待会在activity的oncreate中需要用到
+    //待会在activity的onCreate中需要用到
+    public BillAdapter(ArrayList<Bill> billArrayList, Context context, View rootView) {
         this.billArrayList=billArrayList;//从主页传过来的
         this.context = context;//因为和主页分离了，所以需要获取主页上下文
+        Log.i("add and edit", "BillAdapter的context" + context);
         this.rootView = rootView;
+        if(context instanceof MainActivity) {
+            this.navController = MainActivity.navController;
+            Log.i("add and edit", "context正常");
+
+        }
     }
 
     @NonNull
@@ -71,11 +80,18 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.MyHolder>{
         button_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.i("add and edit", "Clicked");
                 Bundle args = new Bundle();
                 args.putInt("myArg", position);
-                Log.i("add and edit", position +" in adapter");
-                NavController navController = Navigation.findNavController(rootView);
+                Log.i("add and edit", position +" in adapter发送端");
+                if(navController == null){
+                    Log.i("add and edit", "navController为null");
+                    navController = MainActivity.navController;
+                }
+                Log.i("add and edit", "BillAdapter里面的navController存在" + (navController != null));
                 navController.navigate(R.id.navigation_dashboard, args);
+                Log.i("add and edit", "完成");
+                notifyDataSetChanged();
             }
         });
         //删除数据
@@ -85,7 +101,6 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.MyHolder>{
                 removeData(position);
                 Log.i("billList",String.valueOf(billArrayList.size())+"adapter");
                 //删除后更新文件数据，即保存数据
-                dataServer.Save(context, billArrayList);
             }
         });
     }
@@ -95,6 +110,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.MyHolder>{
         notifyItemRemoved(position);
         //有可能删除中间的item会出现错乱，所以下面changed一次
         notifyDataSetChanged();
+        dataServer.Save(context, billArrayList);
     }
     @Override
     public int getItemCount() {
@@ -107,8 +123,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.MyHolder>{
         private TextView year;
         private TextView month;
         private TextView day;
-        //账单金额
-        private TextView amount;
+        private TextView amount;        //账单金额
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);////父类容器，不调用可能有些事件读取不到 和button的重写方法一样(如果是通过继承实现的话)都需要super(View)
@@ -129,6 +144,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.MyHolder>{
         public TextView gettextviewDay() {return day;}
         public TextView gettextviewAmount() {return amount;}
     }
+
 }
 
 

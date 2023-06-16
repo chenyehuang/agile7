@@ -17,12 +17,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import cn.edu.jnu.agile7.MainActivity;
 import cn.edu.jnu.agile7.R;
 import cn.edu.jnu.agile7.databinding.FragmentDashboardBinding;
 
@@ -61,9 +63,10 @@ public class DashboardFragment extends Fragment {
             }
         });
         tabLayoutMediator.attach();
+
         Bundle args = getArguments();
         if (args == null) {
-            Log.i("add and edit", "wrong");
+            Log.i("add and edit", "没有传输args到Dashboard");
             argument_position = -1;
         }
         else
@@ -102,6 +105,11 @@ public class DashboardFragment extends Fragment {
         }
     }
 
+    public static void backToBill() {
+        Log.i("add and edit", "backToBill");
+        MainActivity.navController.navigateUp();
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -109,6 +117,6 @@ public class DashboardFragment extends Fragment {
         Bundle args = new Bundle();
         args.putInt("myArg", -1);
         setArguments(args);
-        Log.i("add and edit", "destroy");
+        Log.i("add and edit", "记一笔destroy");
     }
 }
