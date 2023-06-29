@@ -1,4 +1,4 @@
-package cn.edu.jnu.agile7.ui.notifications;
+package cn.edu.jnu.agile7.ui.Account;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
@@ -15,7 +15,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
+import android.view.MenuItem;
+import android.widget.PopupMenu;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +38,7 @@ public class AccountFragment extends Fragment {
     private FragmentHomeBinding binding;
     private AccountFragment.CustomAdapter recyclerViewAdapter;
     private ArrayList<Account> accountsShow =  new ArrayList<>();
-
+    private int real_position=1;
     @SuppressLint("NotifyDataSetChanged")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -61,6 +63,19 @@ public class AccountFragment extends Fragment {
             }
     );
 
+    private final ActivityResultLauncher<Intent> accountEditLaunch = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (null != result) {
+                    Intent intent=result.getData();
+                    EditAccount(intent);
+//                    if(result.getResultCode()==AccountEditActivity.RESULT_CODE_EDIT)
+//                    {
+//                        EditAccount(intent);
+//                    }
+                }
+            }
+    );
+
     public void AddAccount(Intent intent){
         Bundle bundle = intent.getExtras();
         String name = bundle.getString("account_name");
@@ -70,15 +85,34 @@ public class AccountFragment extends Fragment {
         recyclerViewAdapter.notifyItemChanged(accountsShow.size());
     }
 
+    public void EditAccount(Intent intent){
+//        Account account = accountsShow.get(position[0]);
+        Bundle bundle = intent.getExtras();
+        String name = bundle.getString("account_name");
+        double money = bundle.getDouble("account_money");
+        accountsShow.get(real_position).setAmount(money);
+        accountsShow.get(real_position).setName(name);
+        new AccountServer().Save(this.getContext(), accountsShow);
+        recyclerViewAdapter.notifyItemChanged(real_position);
+    }
+
+    public void get_position(int position){
+        real_position = position;
+
+    }
+
     private void initRecyclerView() {
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_fg_account);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
+
         recyclerViewAdapter = new AccountFragment.CustomAdapter(accountsShow);
         recyclerViewAdapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int clickedPosition = recyclerView.getChildAdapterPosition(v); // 获取点击的位置
+                editItem(clickedPosition);
 //                Intent intent = new Intent(getActivity(), AccountDetailsActivity.class);
 //                accountAddLaunch.launch(intent);
             }
@@ -120,13 +154,13 @@ public class AccountFragment extends Fragment {
                 textViewName = view.findViewById(R.id.textView_account_item_name);
                 textViewMoney = view.findViewById(R.id.textView_account_item_money);
 
-                constraintLayout.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-                        showDeleteDialog(getAdapterPosition()); // 弹出删除对话框
-                        return true;
-                    }
-                });
+//                constraintLayout.setOnLongClickListener(new View.OnLongClickListener() {
+//                    @Override
+//                    public boolean onLongClick(View v) {
+//                        showDeleteDialog(getAdapterPosition()); // 弹出删除对话框
+//                        return true;
+//                    }
+//                });
             }
 
             public TextView getTextViewName() {
@@ -157,20 +191,53 @@ public class AccountFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder viewHolder, final int position) {
+        public void onBindViewHolder(ViewHolder viewHolder, @SuppressLint("RecyclerView") final int position) {
             viewHolder.getTextViewName().setText(localDataSet.get(position).getName());
             System.out.println(localDataSet.get(position).getName());
             viewHolder.getTextViewMoney().setText(String.valueOf(localDataSet.get(position).getAmount()));
             ConstraintLayout constraintLayout = viewHolder.getConstraintLayout();
             constraintLayout.setOnClickListener(onClickListener);
-            constraintLayout.setOnLongClickListener(onLongClickListener);
             constraintLayout.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    showDeleteDialog(viewHolder.getAdapterPosition()); // 弹出删除对话框
+                    // 创建弹出菜单
+                    PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
+                    popupMenu.getMenuInflater().inflate(R.menu.menu_account_item, popupMenu.getMenu());
+
+                    // 设置菜单项点击事件
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            switch (item.getItemId()) {
+                                case R.id.menu_edit:
+                                    // 执行修改操作
+                                    editItem(position);
+                                    get_position(position);
+                                    return true;
+                                case R.id.menu_delete:
+                                    // 执行删除操作
+                                    deleteItem(position);
+                                    return true;
+                                default:
+                                    return false;
+                            }
+                        }
+                    });
+
+                    // 显示弹出菜单
+                    popupMenu.show();
                     return true;
                 }
             });
+
+//            constraintLayout.setOnLongClickListener(onLongClickListener);
+//            constraintLayout.setOnLongClickListener(new View.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View v) {
+//                    showDeleteDialog(viewHolder.getAdapterPosition()); // 弹出删除对话框
+//                    return true;
+//                }
+//            });
 
         }
 
@@ -208,12 +275,28 @@ public class AccountFragment extends Fragment {
                 .show();
     }
 
+    public void editItem(int position) {
+        // 获取要编辑的账户对象
+        Account account = accountsShow.get(position);
+
+        // 创建编辑账户的 Intent
+        Intent intent = new Intent(getActivity(), AccountEditActivity.class);
+        // 将要编辑的账户信息传递给编辑界面
+        intent.putExtra("account_name", account.getName());
+        intent.putExtra("account_money", account.getAmount());
+
+        // 启动编辑界面，并注册结果回调
+        accountEditLaunch.launch(intent);
+    }
+
+
 
     public void deleteItem(int position){
         accountsShow.remove(position);
         new AccountServer().Save(this.getContext(), accountsShow);
         recyclerViewAdapter.notifyItemRemoved(position);
     }
+
 
 
 

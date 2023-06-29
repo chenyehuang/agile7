@@ -155,10 +155,10 @@ public class BillFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        Log.i("billList",String.valueOf(accountArrayList.size())+"onDestroy1");
-        accountArrayList= billadapter.getList();
-        Log.i("billList",String.valueOf(accountArrayList.size())+"onDestroy2");
-        dataServer.Save(BillFragment.this.getContext(), accountArrayList);
+//        Log.i("billList",String.valueOf(accountArrayList.size())+"onDestroy1");
+//        accountArrayList= billadapter.getList();
+//        Log.i("billList",String.valueOf(accountArrayList.size())+"onDestroy2");
+//        dataServer.Save(BillFragment.this.getContext(), accountArrayList);
         super.onDestroyView();
     }
 }

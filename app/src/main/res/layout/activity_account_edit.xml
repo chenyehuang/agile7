@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.Account.AccountAddActivity">
+    tools:context=".ui.Account.AccountEditActivity">
 
     <EditText
-        android:id="@+id/account_money"
+        android:id="@+id/account_money_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="56dp"
@@ -15,12 +15,12 @@
         android:ems="10"
         android:inputType="number"
         android:hint="number"
-        app:layout_constraintStart_toEndOf="@+id/textView14"
-        app:layout_constraintTop_toBottomOf="@+id/account_name"
+        app:layout_constraintStart_toEndOf="@+id/textView14_edit"
+        app:layout_constraintTop_toBottomOf="@+id/account_name_edit"
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/textView14"
+        android:id="@+id/textView14_edit"
         android:layout_width="73dp"
         android:layout_height="49dp"
         android:layout_marginStart="48dp"
@@ -30,11 +30,11 @@
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView12"
+        app:layout_constraintTop_toBottomOf="@+id/textView12_edit"
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/textView12_edit"
         android:layout_width="73dp"
         android:layout_height="49dp"
         android:gravity="center"
@@ -49,7 +49,7 @@
         app:layout_constraintVertical_bias="0.063" />
 
     <EditText
-        android:id="@+id/account_name"
+        android:id="@+id/account_name_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="56dp"
@@ -58,16 +58,16 @@
         android:inputType="textPersonName"
         android:hint="Name"
 
-        app:layout_constraintStart_toEndOf="@+id/textView12"
+        app:layout_constraintStart_toEndOf="@+id/textView12_edit"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button_confirm_add_account"
+        android:id="@+id/button_confirm_add_account_edit"
         android:layout_width="407dp"
         android:layout_height="57dp"
         android:layout_marginBottom="404dp"
         android:backgroundTint="@color/black"
-        android:text="保存"
+        android:text="修改"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"

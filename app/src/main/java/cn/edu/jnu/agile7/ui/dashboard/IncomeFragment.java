@@ -24,6 +24,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 
 import cn.edu.jnu.agile7.R;
+import cn.edu.jnu.agile7.ui.Account.Account;
+import cn.edu.jnu.agile7.ui.Account.AccountServer;
 import cn.edu.jnu.agile7.ui.bill.DataServer;
 
 public class IncomeFragment extends Fragment {
@@ -165,7 +167,8 @@ public class IncomeFragment extends Fragment {
         amount_money = rootView.findViewById(R.id.income_money);
 
 
-        String[] options = {"账户1", "账户2", "账户3"};
+//        String[] options = {"账户1", "账户2", "账户3"};
+        String[] options = get_account();
         account_List = new ArrayList<>(Arrays.asList(options));
 
         adapter = new ArrayAdapter<>(this.getActivity(), R.layout.spinner_item, account_List);
@@ -220,6 +223,21 @@ public class IncomeFragment extends Fragment {
         BillAddAndEdit();
         return rootView;
     }
+
+    public String[] get_account(){
+
+        AccountServer dataServer = new AccountServer();
+        ArrayList<Account> accountItems=dataServer.Load(getContext());
+        ArrayList<String> account = new ArrayList<>();
+        for(int index=0;index<accountItems.size();++index)
+        {
+            account.add(accountItems.get(index).getName());
+        }
+        String[] account_string = account.toArray(new String[account.size()]);
+        return account_string;
+
+    }
+
 
     public void BillAddAndEdit(){
         button.setOnClickListener(new View.OnClickListener() {

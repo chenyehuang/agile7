@@ -35,9 +35,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import cn.edu.jnu.agile7.ui.bill.DataServer;
-import cn.edu.jnu.agile7.ui.notifications.Account;
-import cn.edu.jnu.agile7.ui.notifications.AccountServer;
+import cn.edu.jnu.agile7.ui.Account.Account;
+import cn.edu.jnu.agile7.ui.Account.AccountServer;
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class AddAccountTest {
@@ -66,7 +65,7 @@ public class AddAccountTest {
     @Test
     public void addAccountTest() {
         ViewInteraction bottomNavigationItemView = onView(
-                allOf(withId(R.id.navigation_notifications), withContentDescription("Notifications"),
+                allOf(withId(R.id.navigation_notifications), withContentDescription("Account"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.nav_view),

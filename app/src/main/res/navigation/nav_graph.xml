@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="cn.edu.jnu.agile7.ui.notifications.AccountFragment"
+        android:name="cn.edu.jnu.agile7.ui.Account.AccountFragment"
         android:label="@string/title_notifications" >
         <argument
             android:name="myArg"

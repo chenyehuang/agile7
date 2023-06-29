@@ -1,12 +1,8 @@
-package cn.edu.jnu.agile7.ui.notifications;
+package cn.edu.jnu.agile7.ui.Account;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import cn.edu.jnu.agile7.ui.notifications.AccountFragment;
-import java.util.ArrayList;
 
-import cn.edu.jnu.agile7.ui.dashboard.IncomeFragment;
+import java.util.ArrayList;
 
 public class AccountViewModel extends ViewModel {
 

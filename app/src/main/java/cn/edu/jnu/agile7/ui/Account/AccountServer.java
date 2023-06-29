@@ -1,4 +1,4 @@
-package cn.edu.jnu.agile7.ui.notifications;
+package cn.edu.jnu.agile7.ui.Account;
 
 import android.content.Context;
 
@@ -9,8 +9,6 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-
-import cn.edu.jnu.agile7.ui.notifications.Account;
 
 public class AccountServer {
     public void Save(Context context, ArrayList<Account> data)//context：上下文，哪个页面调用了

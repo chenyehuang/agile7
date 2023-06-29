@@ -1,4 +1,4 @@
-package cn.edu.jnu.agile7.ui.notifications;
+package cn.edu.jnu.agile7.ui.Account;
 
 import androidx.appcompat.app.AppCompatActivity;
 

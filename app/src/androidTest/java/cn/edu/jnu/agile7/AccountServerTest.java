@@ -1,7 +1,5 @@
 package cn.edu.jnu.agile7;
 
-import static org.junit.Assert.*;
-
 import android.content.Context;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -15,8 +13,8 @@ import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 
-import cn.edu.jnu.agile7.ui.notifications.Account;
-import cn.edu.jnu.agile7.ui.notifications.AccountServer;
+import cn.edu.jnu.agile7.ui.Account.Account;
+import cn.edu.jnu.agile7.ui.Account.AccountServer;
 
 @RunWith(AndroidJUnit4.class)
 public class AccountServerTest {
@@ -35,8 +33,10 @@ public class AccountServerTest {
     @After
     public void tearDown() throws Exception {
         Context targetContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        dataSaverBackup.Save(targetContext,accountItemsBackup);
+//        dataSaverBackup.Save(targetContext,accountItemsBackup);
+        dataSaverBackup.ClearData(targetContext);
     }
+
 
     @Test
     public void saveAndLoad() {
@@ -57,8 +57,42 @@ public class AccountServerTest {
             Assert.assertEquals(accountItems.get(index).getName(),accountItemsRead.get(index).getName());
             Assert.assertEquals(accountItems.get(index).getAmount(),accountItemsRead.get(index).getAmount(),1e-2);
         }
-
     }
 
+    @Test
+    public void clearTest() {
+        AccountServer dataSaver=new AccountServer();
+        Context targetContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        ArrayList<Account> accountItems=new ArrayList<>();
+        Account accountItem=new Account("测试",56.7);
+        accountItems.add(accountItem);
+        accountItem=new Account("正常",12.3);
+        accountItems.add(accountItem);
+        dataSaver.Save(targetContext,accountItems);
 
+        dataSaver.ClearData(targetContext);
+        AccountServer dataLoader=new AccountServer();
+        ArrayList<Account> accountItemsRead=dataLoader.Load(targetContext);
+        Assert.assertEquals(accountItemsRead.size(), 0);
+    }
+
+    @Test
+    public void messageTest(){
+        AccountServer dataSaver=new AccountServer();
+        Context targetContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        ArrayList<Account> accountItems=new ArrayList<>();
+        Account accountItem=new Account("测试",56.7);
+        accountItems.add(accountItem);
+        accountItem=new Account("正常",12.3);
+        accountItems.add(accountItem);
+        dataSaver.Save(targetContext,accountItems);
+
+        AccountServer dataLoader=new AccountServer();
+        ArrayList<Account> accountItemsRead=dataLoader.Load(targetContext);
+        for(int index=0;index<accountItems.size();++index)
+        {
+            Assert.assertEquals(accountItems.get(index).getName(),accountItemsRead.get(index).getName());
+            Assert.assertEquals(accountItems.get(index).getAmount(),accountItemsRead.get(index).getAmount(),1e-2);
+        }
+    }
 }

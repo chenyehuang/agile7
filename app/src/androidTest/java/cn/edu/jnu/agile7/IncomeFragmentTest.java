@@ -66,7 +66,7 @@ public class IncomeFragmentTest {
         activity.runOnUiThread(() -> {
 
             // 设置点击组件标志位
-            incomeFragment.clickedComponentFlag[0] = 1;
+//            incomeFragment.clickedComponentFlag[0] = 1;
 
             // 设置金额输入框的文本
             EditText amountMoney = incomeFragment.getView().findViewById(R.id.income_money);
