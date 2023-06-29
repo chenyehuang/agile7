@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
-import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 
+import cn.edu.jnu.agile7.MainActivity;
 import cn.edu.jnu.agile7.R;
 import cn.edu.jnu.agile7.ui.bill.DataServer;
 
@@ -46,15 +46,18 @@ public class ExpenditureFragment extends Fragment {
     private String remake_string;
     private Button button;
     private Bill account_expend;
+    private NumberPicker npYear;
+    private NumberPicker npMonth;
+    private NumberPicker npDay;
+    private View rootView;
+    private Spinner spinner;
+    private ArrayAdapter adapter;
+    public ArrayList<String> account_list;
 
     //        用于存放文件load进来的数据
     ArrayList<Bill>accountArrayList=new ArrayList<>();
     DataServer dataServer=new DataServer();
-    private Spinner spinner;
-    public ArrayList<String> account_list;
-    private NumberPicker npYear;
-    private NumberPicker npMonth;
-    private NumberPicker npDay;
+
 
     public ExpenditureFragment() {
         // Required empty public constructor
@@ -78,7 +81,7 @@ public class ExpenditureFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_expenditure, container, false);
+        rootView = inflater.inflate(R.layout.fragment_expenditure, container, false);
 
         imageView_food = rootView.findViewById(R.id.food_background);
         imageView_shopping = rootView.findViewById(R.id.shopping_background);
@@ -166,7 +169,7 @@ public class ExpenditureFragment extends Fragment {
         String[] options = {"账户1", "账户2", "账户3"};
         account_list = new ArrayList<>(Arrays.asList(options));
 
-        ArrayAdapter adapter = new ArrayAdapter<>(this.getActivity(), R.layout.spinner_item, account_list);
+        adapter = new ArrayAdapter<>(this.getActivity(), R.layout.spinner_item, account_list);
 
         spinner = rootView.findViewById(R.id.expend_spinner);
         spinner.setAdapter(adapter);
@@ -213,7 +216,7 @@ public class ExpenditureFragment extends Fragment {
 
         button = rootView.findViewById(R.id.expend_button);
         BillAddAndEdit();
-
+        Log.i("add and edit", "支出的context"+ getContext());
         return rootView;
     }
 
@@ -260,27 +263,28 @@ public class ExpenditureFragment extends Fragment {
                 selectedDay = npDay.getValue();
 
                 int position = DashboardFragment.argument_position;
-                Log.i("add and edit", String.valueOf(position) + "received");
+                Log.i("add and edit", "收到的位置是"+ position);
                 if (position == -1) {
                     accountArrayList =dataServer.Load(ExpenditureFragment.this.getContext());
                     account_expend = new Bill("支出", category, (-1.0)*money_number, select_account, selectedYear, selectedMonth, selectedDay, title_string, remake_string);
                     accountArrayList.add(account_expend);
                     dataServer.Save(ExpenditureFragment.this.getContext(),accountArrayList);
+                    MainActivity.navController.navigate(R.id.navigation_bill);
                 }
                 else {
                     editData(position);
-                    NavController navController = NavHostFragment.findNavController(ExpenditureFragment.this);//页面跳转
-                    navController.popBackStack();
+                    DashboardFragment.backToBill();
                 }
             }
         });
     }
 
+
+
     private void editData(int position) {
         accountArrayList = dataServer.Load(ExpenditureFragment.this.getContext());
         account_expend = new Bill("支出", category, (-1.0)*money_number, select_account, selectedYear, selectedMonth, selectedDay, title_string, remake_string);
         accountArrayList.set(position, account_expend);
-        Log.i("add and edit", money_number + " money");
         dataServer.Save(ExpenditureFragment.this.getContext(), accountArrayList);
     }
 }

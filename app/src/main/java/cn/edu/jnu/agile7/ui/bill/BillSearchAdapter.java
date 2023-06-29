@@ -54,7 +54,7 @@ public class BillSearchAdapter extends RecyclerView.Adapter<BillSearchAdapter.My
             public void onClick(View v) {
                 if (position >= 0 && position < billArrayList.size()) {
                     UUID id=billArrayList.get(position).getId();
-                    removedata_search(position);
+                    removeData_search(position);
                     for(int i=0;i<billAdapter.getList().size();i++){
                         if (id==billAdapter.getList().get(i).getId()){
                             billAdapter.removeData(i);
@@ -77,7 +77,7 @@ public class BillSearchAdapter extends RecyclerView.Adapter<BillSearchAdapter.My
     }
 
     //在搜索"窗口页面"删除数据
-    public void removedata_search(int position){
+    public void removeData_search(int position){
         billArrayList.remove(position);
         //删除动画
         notifyItemRemoved(position);
@@ -91,8 +91,7 @@ public class BillSearchAdapter extends RecyclerView.Adapter<BillSearchAdapter.My
         private TextView year;
         private TextView month;
         private TextView day;
-        //账单金额
-        private TextView amount;
+        private TextView amount;//账单金额
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);////父类容器，不调用可能有些事件读取不到 和button的重写方法一样(如果是通过继承实现的话)都需要super(View)

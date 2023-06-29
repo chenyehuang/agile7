@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 
+import cn.edu.jnu.agile7.MainActivity;
 import cn.edu.jnu.agile7.R;
 import cn.edu.jnu.agile7.ui.Account.Account;
 import cn.edu.jnu.agile7.ui.Account.AccountServer;
@@ -215,12 +217,9 @@ public class IncomeFragment extends Fragment {
         Title = rootView.findViewById(R.id.income_title);
         Remake = (EditText) rootView.findViewById(R.id.income_remark);
 
-
-
-
-
         button = rootView.findViewById(R.id.income_button);
         BillAddAndEdit();
+        Log.i("add and edit", "收入的context是"+ getContext());
         return rootView;
     }
 
@@ -283,20 +282,18 @@ public class IncomeFragment extends Fragment {
 
                 //开始保存数据
                 int position = DashboardFragment.argument_position;
-                Log.i("add and edit", String.valueOf(position) + "received");
+                Log.i("add and edit", "收到的位置是"+ position);
                 if (position == -1) {
                     accountArrayList = dataServer.Load(IncomeFragment.this.getContext());
                     account_income = new Bill("收入", category, money_number, select_account, selectedYear, selectedMonth, selectedDay, title_string, remake_string);
                     accountArrayList.add(account_income);
-                    Log.e("hh", String.valueOf(accountArrayList.size()) + "button");
                     dataServer.Save(IncomeFragment.this.getContext(), accountArrayList);
+                    MainActivity.navController.navigate(R.id.navigation_bill);
                 }
                 else {
                     editData2(position);
-                    NavController navController = NavHostFragment.findNavController(IncomeFragment.this);
-                    navController.popBackStack();
+                    DashboardFragment.backToBill();
                 }
-
             }
         });
     }
@@ -305,7 +302,6 @@ public class IncomeFragment extends Fragment {
         accountArrayList = dataServer.Load(IncomeFragment.this.getContext());
         account_income = new Bill("收入", category, money_number, select_account, selectedYear, selectedMonth, selectedDay, title_string, remake_string);
         accountArrayList.set(position, account_income);
-        Log.i("add and edit", money_number + " money");
         dataServer.Save(IncomeFragment.this.getContext(), accountArrayList);
     }
 }

@@ -9,26 +9,44 @@
         android:id="@+id/navigation_bill"
         android:name="cn.edu.jnu.agile7.ui.bill.BillFragment"
         android:label="Bill"
-        tools:layout="@layout/fragment_bill" />
+        tools:layout="@layout/fragment_bill">
+        <argument
+            android:name="myArg"
+            android:defaultValue="-1"
+            app:argType="integer" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_home"
         android:name="cn.edu.jnu.agile7.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <argument
+            android:name="myArg"
+            android:defaultValue="-1"
+            app:argType="integer" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="cn.edu.jnu.agile7.ui.dashboard.DashboardFragment"
         android:label="@string/add_account"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard">
+        <argument
+            android:name="myArg"
+            android:defaultValue="-1"
+            app:argType="integer" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="cn.edu.jnu.agile7.ui.Account.AccountFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
-
-
+        tools:layout="@layout/fragment_notifications">
+        <argument
+            android:name="myArg"
+            android:defaultValue="-1"
+            app:argType="integer" />
+    </fragment>
 
 </navigation>

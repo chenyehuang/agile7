@@ -39,6 +39,7 @@ android {
     buildFeatures {
         viewBinding true
     }
+    namespace 'cn.edu.jnu.agile7'
 
 
 }
