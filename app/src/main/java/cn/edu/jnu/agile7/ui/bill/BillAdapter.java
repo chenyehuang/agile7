@@ -76,33 +76,6 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.MyHolder>{
         holder.gettextviewDay().setText(String.valueOf(billArrayList.get(position).getDay()));
         holder.gettextviewAmount().setText(String.valueOf(billArrayList.get(position).getMoney()));
 
-        //编辑数据
-        button_edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i("add and edit", "Clicked");
-                Bundle args = new Bundle();
-                args.putInt("myArg", position);
-                Log.i("add and edit", position +" in adapter发送端");
-                if(navController == null){
-                    Log.i("add and edit", "navController为null");
-                    navController = MainActivity.navController;
-                }
-                Log.i("add and edit", "BillAdapter里面的navController存在" + (navController != null));
-                navController.navigate(R.id.navigation_dashboard, args);
-                Log.i("add and edit", "完成");
-                notifyDataSetChanged();
-            }
-        });
-        //删除数据
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                removeData(position);
-                Log.i("billList",String.valueOf(billArrayList.size())+"adapter");
-                //删除后更新文件数据，即保存数据
-            }
-        });
     }
     public void removeData(int position){
         billArrayList.remove(position);
@@ -137,6 +110,36 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.MyHolder>{
             imageButton=itemView.findViewById(R.id.imagebutton_delete);
 //            编辑按钮
             button_edit = itemView.findViewById(R.id.button_edit);
+
+            //编辑数据
+            button_edit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.i("add and edit", "Clicked");
+                    int position = getBindingAdapterPosition();
+                    Bundle args = new Bundle();
+                    args.putInt("myArg", position);
+                    Log.i("add and edit", position +" in adapter发送端");
+                    if(navController == null){
+                        Log.i("add and edit", "navController为null");
+                        navController = MainActivity.navController;
+                    }
+                    Log.i("add and edit", "BillAdapter里面的navController存在" + (navController != null));
+                    navController.navigate(R.id.navigation_dashboard, args);
+                    Log.i("add and edit", "完成");
+                    notifyDataSetChanged();
+                }
+            });
+            //删除数据
+            imageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getBindingAdapterPosition();
+                    removeData(position);
+                    Log.i("billList",String.valueOf(billArrayList.size())+"adapter");
+                    //删除后更新文件数据，即保存数据
+                }
+            });
         }
         public TextView gettextviewBillName() {return billName;}
         public TextView gettextviewYear() {return year;}
